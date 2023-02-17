@@ -1,13 +1,195 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@font-face {
+  font-family: "General Sans";
+  src: url("./assets/fonts/generalSans/OTF/GeneralSans-Regular.otf");
+  font-weight: normal;
+  font-style: normal;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@font-face {
+  font-family: "General Sans";
+  src: url("./assets/fonts/generalSans/OTF/GeneralSans-Medium.otf");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "General Sans";
+  src: url("./assets/fonts/generalSans/OTF/GeneralSans-Bold.otf");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "General Sans";
+  src: url("./assets/fonts/generalSans/OTF/GeneralSans-Italic.otf");
+  font-weight: normal;
+  font-style: italic;
+}
+
+
+:root {
+  --primary-main: #EE2A7B;
+  --input-bg: #F7F7F7;
+  --label: #2E2E3A;
+  --title-active: #121212;
+  --body-text: #3D3D3D;
+  --white: #ffffff;
+  --error-default: #ab0001;
+  --primary-dark: #9F1C52;
+  --primary-light: #F694BD;
+  --accent_3-primary: #14142B;
+  --gray-scale-placeholder: #9B9B9B;
+  --background: #F7F7FC;
+  /*
+  --accent_1-main: #fc94ff;
+  --accent_1-dark: #d27bd4;
+  --accent_1-light: #fdb8ff;
+  --accent_2-main: #fff4f9;
+  --accent_2-dark: #d4cbcf;
+  --accent_2-light: #fffdfe;
+  --accent_3-main: #020162;
+  --accent_3-dark: #010141;
+  --accent_3-light: #e1e8f2;
+  --success-default: #005123;
+  --success-light: #f2fffb;
+  --error-default: #ab0001;
+  --error-light: #fff3f8;
+  --gray-scale: #3d3d3d;
+  --warning-default: #755118;
+  --warning-light: #FEF7D1;
+  --info-default: #0C2A75;
+  --info-light: #D7F1FD;
+  --body: #6f7273;
+  --placeholder:  #2E2E3A;
+  --line: #d5d8df;
+  --off-white: #fcfcfc;
+  --filter-white: brightness(0%) saturate(100%) invert(100%) sepia(9%) saturate(2%) hue-rotate(284deg) brightness(113%) contrast(100%);
+  --shadow_1: 0px 25px 35px 0px #00000008;
+  --shadow_2: 0px 2px 5px 0px #0000000d; */
+}
+
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	-ms-overflow-style: none;
+}
+
+body{
+  font-family: "General Sans", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+  font-weight: 475px;
+  color: var(--title-active)
+}
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+input {
+  font-family: "General Sans";
+	width: 100%;
+  color: var(--title-active);
+	outline: none;
+  height: 56px;
+  border-radius: 8px;
+  border: none;
+  padding: 18px 24px;
+}
+/* remove autocomplete background  */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+  box-shadow: 0 0 0 30px white inset !important;
+}
+
+a {
+  text-decoration: none;
+}
+
+
+/* title */
+.title-semi-bold {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 36px;
+}
+
+
+
+/* Body */
+/* Body Sm/Regular */
+.body-sm-regular {
+  font-style: normal;
+  font-weight: 475;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+/* Body Sm/Medium */
+.body-sm-medium {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.body-xs-regular {
+  font-style: normal;
+  font-weight: 475;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+/* Body Xs/Medium */
+.body-xs-medium {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+}
+/* Body Xs/Semibold */
+.body-xs-semibold {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+
+.metadata {
+  font-style: normal;
+  font-weight: 475;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+/* Utilities */
+.bold {
+  font-weight: 700;
+}
+
+.flexRow {
+  display: flex;
+  flex-direction: row;
+}
+
+.flexColumn {
+  display: flex;
+  flex-direction: column;
+}
+.textCenter {
+  text-align: center;
+}
+
+.colorBody {
+  color: var(--body-text);
 }
