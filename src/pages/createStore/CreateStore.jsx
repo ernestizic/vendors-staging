@@ -69,7 +69,7 @@ const CreateStore = () => {
 								label='Default currency'
                                 fieldData={currencies}
                                 setFieldValue={setFieldValue}
-                                // defaultOption="Please select a currency"
+                                defaultOption="Nigerian naira (NGN)"
 							/>
                             <span className='currency-info metadata'>This is the default currency for uploading your products.</span>
 

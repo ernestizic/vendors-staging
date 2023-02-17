@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import DropdownArrow from '../../../assets/icons/arrow-square-down.svg';
 
 import styled from 'styled-components';
@@ -81,7 +81,9 @@ const ListItem = styled('li')`
 `;
 
 
-const SelectField = ({ label, name, fieldData, setFieldValue, defaultOption }) => {
+const SelectField = ({ label, name, fieldData, setFieldValue, defaultOption, ...props }) => {
+    const ref = useRef(null);
+
 	const [isOpen, setIsOpen] = useState(false);
 	const [selectedOption, setSelectedOption] = useState(null);
 
@@ -93,8 +95,23 @@ const SelectField = ({ label, name, fieldData, setFieldValue, defaultOption }) =
 		setIsOpen(false);
 	};
 
+    useEffect(()=> {
+        setFieldValue("currency", defaultOption)
+        // eslint-disable-next-line 
+    }, [defaultOption])
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+          if (ref.current && !ref.current.contains(event.target)) {
+            setIsOpen(false)
+          }
+        };
+        document.addEventListener('click', handleClickOutside);
+        return () => document.removeEventListener('click', handleClickOutside);
+      }, []);
+
 	return (
-		<DropDownContainer>
+		<DropDownContainer ref={ref}>
 			<label className={(selectedOption || defaultOption) && 'filled'} htmlFor={name}>
 				{label}
 			</label>

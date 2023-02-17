@@ -114,6 +114,14 @@ a {
   text-decoration: none;
 }
 
+/* label text */
+.label-text {
+  font-style: normal;
+  font-weight: 475;
+  font-size: 14px;
+  line-height: 20px;
+}
+
 
 /* title */
 .title-semi-bold {

@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from './pages/auth/Login';
 import Signup from './pages/auth/Signup'
 import VerifyEmail from './pages/auth/VerifyEmail';
 import CreateStore from './pages/createStore/CreateStore';
@@ -8,6 +9,7 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
+          <Route path='/sign-in' element= {<Login />}/>
           <Route path='/sign-up' element= {<Signup />}/>
           <Route path="/verify-email" element={<VerifyEmail />}/>
           <Route path="/create-store" element={<CreateStore />} />
