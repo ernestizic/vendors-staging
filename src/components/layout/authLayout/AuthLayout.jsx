@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Logo from '../../../assets/icons/logo.svg'
 import { AuthContainer, AuthWrapper } from './AuthLayoutStyle'
 
+// Renders the layout of the authentication screens 
 const AuthLayout = ({children, title, subtext}) => {
   return (
     <AuthWrapper>

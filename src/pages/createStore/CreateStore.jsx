@@ -12,10 +12,8 @@ import { currencies } from '../../utils/currencies';
 let validationSchema = Yup.object().shape({
 	store_name: Yup.string().required('Required'),
 	store_url: Yup.string(),
-	// currency: Yup.string().required('Required'),
+	currency: Yup.string().required('Required'),
 });
-// const options = currencies
-// console.log(options)
 
 const CreateStore = () => {
 	return (

@@ -41,11 +41,13 @@ export const InputContainer = styled.div`
         line-height: 24px;
         outline: none;
         transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
-        
-        /* &:focus {
-        } */
+
         &[type="password"] {
             padding-right: 45px;
+            &::-ms-reveal,
+            &::-ms-clear {
+                display: none;
+            }
         }
         &.password {
             padding-right: 45px;

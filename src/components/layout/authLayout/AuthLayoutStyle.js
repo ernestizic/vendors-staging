@@ -23,3 +23,43 @@ export const AuthContainer = styled.div`
 		}
 	}
 `;
+
+
+export const VerifyEmailContainer = styled.div`
+	height: 100vh;
+	background: var(--accent_3-primary);
+	padding: 20px 0;
+	color: #fff;
+	.secondary {
+		float: right;
+		margin-right: 96px;
+	}
+	@media screen and (max-width: 768px) {
+		.secondary {
+			float: right;
+			margin-right: 16px;
+		}
+	}
+`;
+
+export const Content = styled.div`
+	clear: both;
+	height: max-content;
+	position: absolute;
+	width: 420px;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+	max-width: 100%;
+	max-height: 100%;
+	overflow: auto;
+
+	.body-sm-regular {
+		margin: 16px 0 32px;
+	}
+	@media screen and (max-width: 768px) {
+		padding: 16px;
+	}
+`;
