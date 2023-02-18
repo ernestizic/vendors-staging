@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import ForgotPassword from './pages/auth/ForgotPassword';
 import ResetPassword from './pages/auth/ResetPassword';
 import CreateNewPassword from './pages/auth/CreateNewPassword';
@@ -6,12 +6,21 @@ import Login from './pages/auth/Login';
 import Signup from './pages/auth/Signup'
 import VerifyEmail from './pages/auth/VerifyEmail';
 import CreateStore from './pages/createStore/CreateStore';
+import ProductPage from './pages/dashboard/products/Products';
+import OverviewPage from './pages/dashboard/overview/Overview';
+import DashboardLayout from './components/layout/dashboardLayout/DashboardLayout';
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Routes>
+          <Route path="/" element={<Navigate to="/products" />} />
+          <Route path="/" element={<DashboardLayout />}>
+            <Route path="/products" element={<ProductPage />} />
+            <Route path='/overview' element={<OverviewPage />} />
+          </Route>
+
           <Route path='/sign-in' element= {<Login />}/>
           <Route path='/sign-up' element= {<Signup />}/>
           <Route path='/forgot-password' element= {<ForgotPassword />}/>

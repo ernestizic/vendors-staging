@@ -40,6 +40,8 @@
   --accent_3-primary: #14142B;
   --gray-scale-placeholder: #9B9B9B;
   --background: #F7F7FC;
+  --line-text: #d5d8df;
+  --filter-white: brightness(0%) saturate(100%) invert(100%) sepia(9%) saturate(2%) hue-rotate(284deg) brightness(113%) contrast(100%);
   /*
   --accent_1-main: #fc94ff;
   --accent_1-dark: #d27bd4;
@@ -61,7 +63,6 @@
   --info-light: #D7F1FD;
   --body: #6f7273;
   --placeholder:  #2E2E3A;
-  --line: #d5d8df;
   --off-white: #fcfcfc;
   --filter-white: brightness(0%) saturate(100%) invert(100%) sepia(9%) saturate(2%) hue-rotate(284deg) brightness(113%) contrast(100%);
   --shadow_1: 0px 25px 35px 0px #00000008;
@@ -140,6 +141,13 @@ a {
   font-weight: 475;
   font-size: 16px;
   line-height: 24px;
+}
+
+.body-md-semibold {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 27px;
 }
 
 /* Body Sm/Medium */
