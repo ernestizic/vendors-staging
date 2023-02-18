@@ -31,10 +31,6 @@ const ForgotPassword = () => {
 				>
 					{({
 						values,
-						errors,
-						touched,
-						handleChange,
-						handleBlur,
 						handleSubmit,
 						isValid,
 						dirty,
@@ -46,7 +42,7 @@ const ForgotPassword = () => {
 								value={values.email}
 							/>
 							<Button
-								text='Sign in'
+								text='Send instructions'
 								type='submit'
 								disabled={!(isValid && dirty)}
 							/>
