@@ -5,7 +5,7 @@ import Eye from '../../../assets/icons/eye.svg';
 import EyeSlash from '../../../assets/icons/eye_slash.svg';
 import { InputContainer, ErrorText } from './InputFieldStyle';
 
-const InputField = ({ type, name, value, label, ...props }) => {
+const InputField = ({ type, name, value, label, required, width, ...props }) => {
 	const [field, meta] = useField({ ...props, name });
 	const [showPassword, setShowPassword] = useState(false);
 
@@ -15,9 +15,9 @@ const InputField = ({ type, name, value, label, ...props }) => {
 	}
 	return (
 		<>
-			<InputContainer>
+			<InputContainer width={width}>
 				<label className={value && 'filled'} htmlFor={name}>
-					{label}
+					{label} {required && <span>*</span>}
 				</label>
 				<input
 					{...props}
@@ -58,8 +58,9 @@ InputField.defaultProps = {
 InputField.propTypes = {
 	value: PropTypes.string.isRequired,
 	name: PropTypes.string.isRequired,
+	label: PropTypes.string.isRequired,
 	type: PropTypes.string,
-	label: PropTypes.string,
+	required: PropTypes.bool,
 };
 
 export default InputField;

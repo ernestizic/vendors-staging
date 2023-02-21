@@ -65,7 +65,7 @@ const CreateStore = () => {
 							<SelectField
 								name='currency'
 								label='Default currency'
-                                fieldData={currencies}
+                                fieldData={currencies.map((val) => {return {"name": val.name, "other": `(${val.cc})`}})}
                                 setFieldValue={setFieldValue}
                                 defaultOption="Nigerian naira (NGN)"
 							/>

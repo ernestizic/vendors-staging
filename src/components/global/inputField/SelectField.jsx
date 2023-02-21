@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import DropdownArrow from '../../../assets/icons/arrow-square-down.svg';
+import PropTypes from 'prop-types';
 
 import styled from 'styled-components';
 
@@ -17,10 +18,13 @@ const DropDownContainer = styled('div')`
 		font-size: 14px;
 		line-height: 20px;
 		left: 24px;
+		span{
+            color: var(--error-default);
+        }
 	}
-    .filled {
-        transform: translate(0, 6px) scale(1);
-    }
+	.filled {
+		transform: translate(0, 6px) scale(1);
+	}
 
 	.dropdown-arrow {
 		position: absolute;
@@ -30,27 +34,30 @@ const DropDownContainer = styled('div')`
 			cursor: pointer;
 		}
 	}
-`;
-
-const DropDownHeader = styled('div')`
-	border: 1px solid blue;
-	width: 100%;
-	background: var(--input-bg);
-	height: 56px;
-	max-height: 56px;
-	border-radius: 8px;
-	border: none;
-	padding: 26px 24px;
-	font-weight: 500;
-	font-size: 16px;
-	line-height: 24px;
-	outline: none;
-	transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+	input {
+		margin-bottom: 16px;
+		width: 100%;
+		background: var(--input-bg);
+		height: 56px;
+		max-height: 56px;
+		border-radius: 8px;
+		border: none;
+		padding-top: 36px;
+		padding-right: 50px;
+		font-weight: 500;
+		font-size: 16px;
+		line-height: 24px;
+		outline: none;
+		transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+		&:hover {
+			cursor: pointer;
+		}
+	}
 `;
 
 const DropDownListContainer = styled('div')`
 	position: absolute;
-	top: calc(100% + 4px);
+	top: 85%;
 	max-height: 264px;
 	width: 100%;
 	background: #fff;
@@ -58,7 +65,7 @@ const DropDownListContainer = styled('div')`
 	border-radius: 8px;
 	overflow: auto;
 	z-index: 1;
-    &::-webkit-scrollbar {
+	&::-webkit-scrollbar {
 		display: none;
 	}
 `;
@@ -74,15 +81,21 @@ const ListItem = styled('li')`
 	padding: 12px 24px;
 	line-height: 24px;
 	list-style: none;
-    &:hover {
-        background-color: var(--input-bg);
-        cursor: pointer;
-    }
+	&:hover {
+		background-color: var(--input-bg);
+		cursor: pointer;
+	}
 `;
 
-
-const SelectField = ({ label, name, fieldData, setFieldValue, defaultOption, ...props }) => {
-    const ref = useRef(null);
+const SelectField = ({
+	label,
+	name,
+	fieldData,
+	setFieldValue,
+	defaultOption,
+	required
+}) => {
+	const ref = useRef(null);
 
 	const [isOpen, setIsOpen] = useState(false);
 	const [selectedOption, setSelectedOption] = useState(null);
@@ -90,41 +103,53 @@ const SelectField = ({ label, name, fieldData, setFieldValue, defaultOption, ...
 	const toggling = () => setIsOpen(!isOpen);
 
 	const onOptionClicked = (value) => () => {
-		setSelectedOption(`${value.name} (${value.cc})`);
-        setFieldValue("currency", value.name)
+		setSelectedOption(`${value.name} ${value.other ? value.other : ''}`);
+		setFieldValue(name, value.name);
 		setIsOpen(false);
 	};
 
-    useEffect(()=> {
-        setFieldValue("currency", defaultOption)
-        // eslint-disable-next-line 
-    }, [defaultOption])
+	useEffect(() => {
+		setFieldValue(name, defaultOption);
+		// eslint-disable-next-line
+	}, [defaultOption]);
 
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-          if (ref.current && !ref.current.contains(event.target)) {
-            setIsOpen(false)
-          }
-        };
-        document.addEventListener('click', handleClickOutside);
-        return () => document.removeEventListener('click', handleClickOutside);
-      }, []);
+	useEffect(() => {
+		const handleClickOutside = (event) => {
+			if (ref.current && !ref.current.contains(event.target)) {
+				setIsOpen(false);
+			}
+		};
+		document.addEventListener('click', handleClickOutside);
+		return () => document.removeEventListener('click', handleClickOutside);
+	}, []);
 
 	return (
 		<DropDownContainer ref={ref}>
-			<label className={(selectedOption || defaultOption) && 'filled'} htmlFor={name}>
-				{label}
+			<label
+				className={(selectedOption || defaultOption) && 'filled'}
+				htmlFor={name}
+			>
+				{label} {required && <span>*</span>}
 			</label>
-			<DropDownHeader onClick={toggling}>
-                {selectedOption || defaultOption}
-				<img src={DropdownArrow} alt='dropdown' className='dropdown-arrow' />
-			</DropDownHeader>
+			<input
+				type='text'
+				value={selectedOption || defaultOption}
+				readOnly
+				onClick={toggling}
+			/>
+			<img
+				src={DropdownArrow}
+				alt='dropdown'
+				className='dropdown-arrow'
+				onClick={toggling}
+			/>
+
 			{isOpen && (
 				<DropDownListContainer>
 					<DropDownList>
 						{fieldData.map((option) => (
 							<ListItem onClick={onOptionClicked(option)} key={Math.random()}>
-								{`${option.name} (${option.cc})`}
+								{option.name} {option.other && `${option.other}`}
 							</ListItem>
 						))}
 					</DropDownList>
@@ -132,6 +157,21 @@ const SelectField = ({ label, name, fieldData, setFieldValue, defaultOption, ...
 			)}
 		</DropDownContainer>
 	);
+};
+
+// PropTypes
+SelectField.propTypes = {
+	name: PropTypes.string.isRequired,
+	fieldData: PropTypes.arrayOf(
+		PropTypes.exact({
+			name: PropTypes.string.isRequired,
+			other: PropTypes.string,
+		})
+	),
+	setFieldValue: PropTypes.func.isRequired,
+	label: PropTypes.string,
+	defaultOption: PropTypes.string,
+	required: PropTypes.bool
 };
 
 export default SelectField;

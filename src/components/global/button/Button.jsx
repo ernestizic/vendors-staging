@@ -14,22 +14,21 @@ const Button = ({
 	iconRight,
 	isLoading,
 }) => {
-	const props = { width, text, type, disabled, onClick, className };
+	const styleProps = { width, text, type, disabled, onClick, className };
 
 	if (isLoading) {
 		return (
-			<StyledButton {...props}>
+			<StyledButton {...styleProps}>
 				<Loader />
 			</StyledButton>
 		);
 	}
 	return (
-		<StyledButton {...props}>
+		<StyledButton {...styleProps}>
 			{iconLeft && (
 				<img
 					src={iconLeft}
 					alt='icon'
-					className={`icon${iconLeft && text ? ' left' : ''}`}
 				/>
 			)}
 			{text && <span>{text}</span>}
@@ -37,7 +36,6 @@ const Button = ({
 				<img
 					src={iconRight}
 					alt='icon'
-					className={`icon${iconLeft && text ? ' right' : ''}`}
 				/>
 			)}
 		</StyledButton>

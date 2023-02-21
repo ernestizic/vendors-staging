@@ -1,10 +1,15 @@
 import React from 'react'
+import EmptyState from '../../../components/dashboardComponents/EmptyState'
+import Header from '../../../components/dashboardComponents/header/Header'
+
 
 const Products = () => {
   return (
-    <div>
-        <h1>Products</h1>
-    </div>
+    <>
+      <Header title="Product" />
+      <EmptyState />
+
+    </>
   )
 }
 

@@ -34,7 +34,7 @@
   --title-active: #121212;
   --body-text: #3D3D3D;
   --white: #ffffff;
-  --error-default: #ab0001;
+  --error-default: #B42318;
   --primary-dark: #9F1C52;
   --primary-light: #F694BD;
   --accent_3-primary: #14142B;
@@ -132,6 +132,13 @@ a {
   line-height: 36px;
 }
 
+.title-bold {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 36px;
+}
+
 
 
 /* Body */
@@ -148,6 +155,13 @@ a {
   font-weight: 600;
   font-size: 18px;
   line-height: 27px;
+}
+
+.body-sm-semibold {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
 }
 
 /* Body Sm/Medium */
@@ -189,6 +203,9 @@ a {
 }
 
 /* Utilities */
+.auto {
+  margin: auto;
+}
 .bold {
   font-weight: 700;
 }
@@ -201,6 +218,42 @@ a {
 .flexColumn {
   display: flex;
   flex-direction: column;
+}
+
+.alignCenter {
+  align-items: center;
+}
+
+.alignEnd {
+  align-items: flex-end;
+}
+
+.alignStart {
+  align-items: flex-start;
+}
+
+.alignSpaceBetween {
+  align-items: space-between;
+}
+
+.justifyCenter {
+  justify-content: center;
+}
+
+.justifyEnd {
+  justify-content: flex-end;
+}
+
+.justifyStart {
+  justify-content: flex-start;
+}
+
+.justifySpaceBetween {
+  justify-content: space-between;
+}
+
+.justifySpaceAround {
+  justify-content: space-around;
 }
 .textCenter {
   text-align: center;

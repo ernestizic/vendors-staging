@@ -9,6 +9,8 @@ import CreateStore from './pages/createStore/CreateStore';
 import ProductPage from './pages/dashboard/products/Products';
 import OverviewPage from './pages/dashboard/overview/Overview';
 import DashboardLayout from './components/layout/dashboardLayout/DashboardLayout';
+import AddProductMethod from './pages/dashboard/products/addProductMethod/AddProductMethod';
+import SingleProduct from './pages/dashboard/products/addProductMethod/singleProduct/SingleProduct';
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
           <Route path="/" element={<Navigate to="/products" />} />
           <Route path="/" element={<DashboardLayout />}>
             <Route path="/products" element={<ProductPage />} />
+            <Route path="/add-product" element={<AddProductMethod />} />
+            <Route path="add-product/add-product-details" element={<SingleProduct />} />
             <Route path='/overview' element={<OverviewPage />} />
           </Route>
 

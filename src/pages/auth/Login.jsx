@@ -6,6 +6,8 @@ import InputField from '../../components/global/inputField/InputField';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import Button from '../../components/global/button/Button';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../../redux/slices/authSlice';
 
 const LoginContainer = styled('div')`
 	.form-extra {
@@ -31,6 +33,9 @@ let validationSchema = Yup.object().shape({
 });
 
 const Login = () => {
+	const dispatch = useDispatch()
+	const {isLoading, userInfo, accessToken} = useSelector((state)=> state.auth)
+	console.log(isLoading, userInfo, accessToken)
 	return (
 		<LoginContainer>
 			<AuthLayout title='Sign in to Giftly'>
@@ -40,11 +45,8 @@ const Login = () => {
 						password: '',
 					}}
 					validationSchema={validationSchema}
-					onSubmit={(values, { setSubmitting }) => {
-						setTimeout(() => {
-							alert(JSON.stringify(values, null, 2));
-							setSubmitting(false);
-						}, 400);
+					onSubmit={(values) => {
+						dispatch(login(values))
 					}}
 				>
 					{({
@@ -74,6 +76,7 @@ const Login = () => {
 								text='Sign in'
 								type='submit'
 								disabled={!(isValid && dirty)}
+								isLoading={isLoading}
 							/>
 						</form>
 					)}

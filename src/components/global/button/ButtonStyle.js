@@ -55,4 +55,11 @@ export const StyledButton = styled.button`
 			color: var(--primary-dark);
 		}
 	}
+    /* dashed button */
+	&.dashed {
+		border: 1px dashed var(--line-text);
+		color: var(--primary-main);
+		background: inherit;
+        box-shadow: none;
+	}
 `;

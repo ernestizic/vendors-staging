@@ -16,6 +16,9 @@ export const InputContainer = styled.div`
         font-size: 14px;
 		line-height: 20px;
 		left: 24px;
+        span{
+            color: var(--error-default);
+        }
 	}
     &:focus-within label {
         /* transform: translate(0, 6px) scale(0.8); */
@@ -28,7 +31,7 @@ export const InputContainer = styled.div`
     }
     input {
         margin-bottom: 16px;
-        width: 100%;
+        width: ${(props)=> props.width ? props.width : "100%"};
         background: var(--input-bg);
         height: 56px;
         max-height: 56px;
@@ -48,6 +51,14 @@ export const InputContainer = styled.div`
             &::-ms-clear {
                 display: none;
             }
+        }
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        &[type=number] {
+            -moz-appearance: textfield;
         }
         &.password {
             padding-right: 45px;

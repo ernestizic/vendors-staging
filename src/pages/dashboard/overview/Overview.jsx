@@ -1,10 +1,12 @@
 import React from 'react'
+import Header from '../../../components/dashboardComponents/header/Header'
 
 const Overview = () => {
   return (
-    <div>
-        <h1>Overview page</h1>
-    </div>
+    <>
+      <Header title="Dashboard" />
+        <h3>Overview page</h3>
+    </>
   )
 }
 
