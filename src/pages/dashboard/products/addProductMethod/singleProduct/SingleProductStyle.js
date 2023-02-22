@@ -17,16 +17,25 @@ export const AddProductContainer = styled.div`
 
 export const AddProductField = styled.div`
     /* border: 1px solid blue; */
+    position: relative;
     display: flex;
     gap: 16px;
     margin-bottom: 16px;
+    max-height: ${({open})=> open ? "" : "58px"};
+
+    .accordion-arrow {
+        border: none;
+        position: absolute;
+        right: 0;
+        background: inherit;
+    }
 `
 
 export const ImageContainer = styled.div`
     position: relative;
-    width: 300px;
-    /* max-width: 300px; */
-    height: 300px;
+    width: ${({open})=> open ? "300px" : "56px"};
+    max-width: 300px;
+    height: ${({open})=> open ? "300px" : "56px"};
     border: 1px dashed var(--line-text);
     border-radius: 8px;
 
@@ -58,7 +67,11 @@ export const ImageContainer = styled.div`
             margin-top: 10px;
         }
         span{
-            color: var(--primary-main)
+            color: var(--primary-main);
         }
     }
+`
+
+export const HiddenFields = styled.div`
+    /* border: 1px solid red; */
 `

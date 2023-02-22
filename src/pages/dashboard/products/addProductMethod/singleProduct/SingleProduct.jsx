@@ -1,34 +1,46 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Header from '../../../../../components/dashboardComponents/header/Header';
-import GalleryIcon from '../../../../../assets/icons/gallery-export.svg';
-// import CloseIcon from '../../../../../assets/icons/close-square-pink.svg';
 import PlusIcon from '../../../../../assets/icons/plus_pink.svg';
-import {
-	AddProductContainer,
-	AddProductField,
-	ImageContainer,
-	SingleProductContainer,
-} from './SingleProductStyle';
-import InputField from '../../../../../components/global/inputField/InputField';
-import SelectField from '../../../../../components/global/inputField/SelectField';
 import * as Yup from 'yup';
-import { Formik } from 'formik';
-import TextArea from '../../../../../components/global/inputField/TextArea';
+import { FieldArray, Form, Formik } from 'formik';
 import Button from '../../../../../components/global/button/Button';
 import { useNavigate } from 'react-router-dom';
-
-const categories = ['Skincare', 'Accessories'];
+import { AddProductContainer, SingleProductContainer } from './SingleProductStyle';
+import ProductField from './ProductField';
 
 // Form validation
-let validationSchema = Yup.object().shape({
-	product_name: Yup.string().email('Invalid email address').required('Required'),
-	password: Yup.string()
-		.min(8, 'Your password must contain at least 8 characters.')
-		.required('Please enter password'),
-});
+const validationSchema = Yup.object().shape({
+    products: Yup.array()
+      .of(
+        Yup.object().shape({
+            product_name: Yup.string().required('Required'),
+            product_description: Yup.string(),
+            product_category: Yup.string(),
+            display_price: Yup.string(),
+            tags: Yup.string(),
+        })
+      )
+  });
 
 const SingleProduct = () => {
     const navigate = useNavigate()
+    const [openKey, setOpenKey] = useState(0)
+
+    const handleToggle=(key)=> {
+        if(key === openKey) {
+            setOpenKey(key)
+        } else {
+            setOpenKey(openKey !== key ? key : null)
+        }
+    }
+
+    function handleOpenNewForm(val) {
+        if(val.length === 1) {
+            setOpenKey(1)
+        } else {
+            setOpenKey(val.length)
+        }
+    }
 	return (
 		<>
 			<Header
@@ -45,96 +57,69 @@ const SingleProduct = () => {
 				<AddProductContainer>
 					<Formik
 						initialValues={{
-							product_image: '',
-							product_name: '',
-							product_description: '',
-							product_category: '',
-							display_price: '',
-							tags: "",
+                            products: [
+                                {
+                                    product_image: '',
+                                    product_name: '',
+                                    product_description: '',
+                                    product_category: '',
+                                    display_price: '',
+                                    tags: "",
+                                }
+                            ]
 						}}
 						validationSchema={validationSchema}
 						onSubmit={(values) => {
-							console.log(values);
+                            setTimeout(() => {
+                                alert(JSON.stringify(values, null, 2));
+                            }, 400);
 						}}
 					>
 						{({
 							values,
-							errors,
-							touched,
 							handleChange,
-							handleBlur,
-							handleSubmit,
+							// handleBlur,
+							// handleSubmit,
 							setFieldValue,
 							isValid,
 							dirty,
 						}) => (
-							<form onSubmit={handleSubmit}>
-								<div>
-									<AddProductField>
-										<ImageContainer>
-											{/* <button>
-                                            <img src={CloseIcon} alt="close"  width="20px" height="20px"  />
-                                        </button> */}
-											{/* <img src={Image} alt="test" width="100%" height="100%" className='product-image'/> */}
-											<div className='no-image body-xs-medium'>
-												<img
-													src={GalleryIcon}
-													alt='gallery export'
-													width='24px'
-													height='24px'
-												/>
-												<p>
-													Drag or drop image here or just click to{' '}
-													<span>browse</span> files.
-												</p>
-											</div>
-										</ImageContainer>
-										<div>
-											<InputField
-												value={values.product_name}
-												name='product_name'
-												label='Product name'
-												width='500px'
-												required
-											/>
-											<TextArea
-												value={values.product_description}
-												name='product_description'
-												label='Product description'
-											/>
-											<SelectField
-												name='product_category'
-												setFieldValue={setFieldValue}
-												label='Select product category'
-												fieldData={categories.map((val) => {
-													return { name: val };
-												})}
-												required
-											/>
-											<InputField
-                                                type="number"
-												value={values.display_price}
-												name='display_price'
-												label='Display price'
-												width='500px'
-												required
-											/>
-											<InputField
-												// value={values.tags}
-												name='tags'
-												label='Add product tags'
-												width='500px'
-											/>
-										</div>
-									</AddProductField>
-									<Button
-										text='Add another'
-										type='button'
-										className='dashed'
-										iconLeft={PlusIcon}
-									/>
-								</div>
-
+							<Form>
+                                <FieldArray
+                                    name="products"
+                                    render={(arrayHelpers) => (
+                                        <div>
+                                            {values.products && values.products.map((item, idx)=> (
+                                                <ProductField
+                                                    key={idx}
+                                                    index={idx}
+                                                    product={item}
+                                                    onChange={handleChange}
+                                                    setFieldValue={setFieldValue}
+                                                    toggle={handleToggle}
+                                                    open={openKey === idx}
+                                                />
+                                            ))}
+                                            <Button
+                                                text='Add another'
+                                                type='button'
+                                                className='dashed'
+                                                iconLeft={PlusIcon}
+                                                onClick={() => {
+                                                    handleOpenNewForm(values.products)
+                                                    arrayHelpers.push({
+                                                        product_image: '',
+                                                        product_name: '',
+                                                        product_description: '',
+                                                        product_category: '',
+                                                        display_price: '',
+                                                        tags: "",
+                                                    });								
+                                                }}
+                                            />
+                                        </div>
+                                    )}
+                                />
 								<div className='flexRow' style={{gap: "24px", marginTop: "48px"}}>
 									<Button
                                         className="secondary"
@@ -149,7 +134,7 @@ const SingleProduct = () => {
 										// isLoading={isLoading}
 									/>
 								</div>
-							</form>
+							</Form>
 						)}
 					</Formik>
 				</AddProductContainer>

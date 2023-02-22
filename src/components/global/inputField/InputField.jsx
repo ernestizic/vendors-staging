@@ -5,7 +5,7 @@ import Eye from '../../../assets/icons/eye.svg';
 import EyeSlash from '../../../assets/icons/eye_slash.svg';
 import { InputContainer, ErrorText } from './InputFieldStyle';
 
-const InputField = ({ type, name, value, label, required, width, ...props }) => {
+const InputField = ({ type, name, value, label, required, width, bg, readonly, ...props }) => {
 	const [field, meta] = useField({ ...props, name });
 	const [showPassword, setShowPassword] = useState(false);
 
@@ -15,7 +15,7 @@ const InputField = ({ type, name, value, label, required, width, ...props }) => 
 	}
 	return (
 		<>
-			<InputContainer width={width}>
+			<InputContainer width={width} bg={bg}>
 				<label className={value && 'filled'} htmlFor={name}>
 					{label} {required && <span>*</span>}
 				</label>
@@ -26,7 +26,11 @@ const InputField = ({ type, name, value, label, required, width, ...props }) => 
 					type={type === 'password' ? handleType() : type}
 					autoComplete='off'
 					value={value}
+					disabled={readonly}
 					className={type === "password" ? "password" : ""}
+					onChange={(e)=> {
+						field.onChange(e);
+					}}
 				/>
 				{type === 'password' &&
 					(showPassword ? (
@@ -44,7 +48,7 @@ const InputField = ({ type, name, value, label, required, width, ...props }) => 
 							onClick={() => setShowPassword((prev) => !prev)}
 						/>
 					))}
-				{meta.error && meta.touched && <ErrorText className='metadata'>{meta.error}</ErrorText>}
+				{meta.error && meta.touched && !readonly && <ErrorText className='metadata formik-error'>{meta.error}</ErrorText>}
 			</InputContainer>
 		</>
 	);
@@ -61,6 +65,8 @@ InputField.propTypes = {
 	label: PropTypes.string.isRequired,
 	type: PropTypes.string,
 	required: PropTypes.bool,
+	readonly: PropTypes.bool,
+	bg: PropTypes.any,
 };
 
 export default InputField;

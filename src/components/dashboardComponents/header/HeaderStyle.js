@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
 export const HeaderContainer = styled.div`
+	position: sticky;
+	top: 0;
+	z-index: 1;
     background: #fff;
 	border-bottom: 1px solid var(--line-text);
 	margin-bottom: 32px;

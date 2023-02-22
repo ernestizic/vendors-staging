@@ -32,7 +32,7 @@ export const InputContainer = styled.div`
     input {
         margin-bottom: 16px;
         width: ${(props)=> props.width ? props.width : "100%"};
-        background: var(--input-bg);
+        background: ${({bg})=> bg ? bg : "var(--input-bg)"};
         height: 56px;
         max-height: 56px;
         border-radius: 8px;
