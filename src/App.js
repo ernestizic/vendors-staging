@@ -11,10 +11,14 @@ import OverviewPage from './pages/dashboard/overview/Overview';
 import DashboardLayout from './components/layout/dashboardLayout/DashboardLayout';
 import AddProductMethod from './pages/dashboard/products/addProductMethod/AddProductMethod';
 import SingleProduct from './pages/dashboard/products/addProductMethod/singleProduct/SingleProduct';
+import Alert from './components/global/alert/Alert';
+import { useSelector } from 'react-redux';
 
 function App() {
+  const {msg, alert} = useSelector(state => state.alert)
   return (
     <div className="App">
+      {alert && <Alert message={msg.message} />}
       <Router>
         <Routes>
           <Route path="/" element={<Navigate to="/products" />} />

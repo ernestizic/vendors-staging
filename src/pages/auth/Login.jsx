@@ -6,9 +6,10 @@ import InputField from '../../components/global/inputField/InputField';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import Button from '../../components/global/button/Button';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { base_url_vendors } from '../../utils/utils';
+import { setAlert } from '../../redux/slices/alertSlice';
 
 const LoginContainer = styled('div')`
 	.form-extra {
@@ -18,11 +19,11 @@ const LoginContainer = styled('div')`
 	a {
 		color: inherit;
 	}
-    .forgot_password {
-        display: block;
-        margin: 8px 0 24px;
-        color: var(--primary-main)
-    }
+	.forgot_password {
+		display: block;
+		margin: 8px 0 24px;
+		color: var(--primary-main);
+	}
 `;
 
 // Form validation
@@ -33,24 +34,30 @@ let validationSchema = Yup.object().shape({
 		.required('Please enter password'),
 });
 
-const login =async(userData, setSubmitting)=> {
-	console.log(userData)
-	try {
-		const res = await axios.post(`${base_url_vendors}/login`, userData);
-		const data = res.data;
-		console.log(data)
-		setSubmitting(false)
-	} catch (err) {
-		let error = err.response ? err.response.data : err.message;
-		console.log(error);
-		setSubmitting(false)
-	}
-}
-
+// Login Component
 const Login = () => {
-	const {userInfo, accessToken} = useSelector((state)=> state.auth)
-	// console.log(userInfo, accessToken)
-	const navigate = useNavigate()
+	const dispatch = useDispatch();
+	const { userInfo, accessToken } = useSelector((state) => state.auth);
+	console.log(userInfo, accessToken);
+
+	// Login user function
+	const login = async (userData, setSubmitting) => {
+		console.log(userData);
+		try {
+			const res = await axios.post(`${base_url_vendors}/login`, userData, {
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			});
+			const data = res.data;
+			console.log(data);
+			setSubmitting(false);
+		} catch (err) {
+			let error = err.response ? err.response.data.data.email[0] : err.message;
+			dispatch(setAlert({ message: error }));
+			setSubmitting(false);
+		}
+	};
 
 	return (
 		<LoginContainer>
@@ -62,8 +69,7 @@ const Login = () => {
 					}}
 					validationSchema={validationSchema}
 					onSubmit={(values, { setSubmitting }) => {
-						login(values, setSubmitting)
-						navigate("/")
+						login(values, setSubmitting);
 					}}
 				>
 					{({
@@ -89,7 +95,12 @@ const Login = () => {
 								type='password'
 								value={values.password}
 							/>
-                            <Link to="/forgot-password" className='forgot_password label-text'>Forgot your password?</Link>
+							<Link
+								to='/forgot-password'
+								className='forgot_password label-text'
+							>
+								Forgot your password?
+							</Link>
 							<Button
 								text='Sign in'
 								type='submit'
@@ -99,9 +110,11 @@ const Login = () => {
 						</form>
 					)}
 				</Formik>
-                <p className='body-xs-regular form-extra'>
+				<p className='body-xs-regular form-extra'>
 					No account?{' '}
-					<span className='body-xs-semibold'><Link to="/sign-up">Sign up</Link></span>
+					<span className='body-xs-semibold'>
+						<Link to='/sign-up'>Sign up</Link>
+					</span>
 				</p>
 			</AuthLayout>
 		</LoginContainer>
