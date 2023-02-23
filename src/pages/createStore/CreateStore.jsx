@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import AuthLayout from '../../components/layout/authLayout/AuthLayout';
 import InputField from '../../components/global/inputField/InputField';
 import * as Yup from 'yup';
@@ -7,15 +7,43 @@ import Button from '../../components/global/button/Button';
 import { CreateStoreContainer } from './CreateStoreStyle';
 import SelectField from '../../components/global/inputField/SelectField';
 import { currencies } from '../../utils/currencies';
+import axios from 'axios';
+import { base_url_vendors } from '../../utils/utils';
 
-// Form validation
-let validationSchema = Yup.object().shape({
-	store_name: Yup.string().required('Required'),
-	store_url: Yup.string(),
-	currency: Yup.string().required('Required'),
-});
+
 
 const CreateStore = () => {
+
+	// test to see if get request works
+	useEffect(()=> {
+		const getStore = async() => {
+			const res = await axios.get(`${base_url_vendors}/market`)
+			console.log(res.data)
+		}
+		getStore()
+	}, [])
+
+	// Function to create store
+	const createStore =async(userData, setSubmitting)=> {
+		console.log(userData)
+		try {
+			const res = await axios.post(`${base_url_vendors}/store`, userData);
+			const data = res.data;
+			console.log(data)
+			setSubmitting(false)
+		} catch (err) {
+			let error = err.response ? err.response.data : err.message;
+			console.log(error);
+			setSubmitting(false)
+		}
+	}
+	
+	// Form validation
+	let validationSchema = Yup.object().shape({
+		store_name: Yup.string().required('Required'),
+		store_url: Yup.string(),
+		currency: Yup.string().required('Required'),
+	});
 	return (
 		<CreateStoreContainer>
 			<p className='auth_container body-xs-regular'>
@@ -34,10 +62,7 @@ const CreateStore = () => {
 					}}
 					validationSchema={validationSchema}
 					onSubmit={(values, { setSubmitting }) => {
-						setTimeout(() => {
-							alert(JSON.stringify(values, null, 2));
-							setSubmitting(false);
-						}, 400);
+						createStore(values, setSubmitting)
 					}}
 				>
 					{({

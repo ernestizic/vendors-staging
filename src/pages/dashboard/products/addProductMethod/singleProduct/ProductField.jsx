@@ -5,6 +5,7 @@ import ArrowIcon from '../../../../../assets/icons/arrow-down.svg';
 // import Image from '../../../../../assets/images/test.png';
 import { AddProductField, ImageContainer, HiddenFields } from './SingleProductStyle';
 import InputField from '../../../../../components/global/inputField/InputField';
+import TagInputField from '../../../../../components/global/inputField/TagInputField';
 import SelectField from '../../../../../components/global/inputField/SelectField';
 import TextArea from '../../../../../components/global/inputField/TextArea';
 
@@ -76,33 +77,16 @@ const ProductField = ({ product, onChange, index, setFieldValue, toggle, open })
                             width='500px'
                             required
                         />
-                        <InputField
-                            value={product.tags}
+                        <TagInputField
+                            // value={product.tags}
                             name={`products[${index}].tags`}
                             label='Add product tags'
-                            width='500px'
+                            setFieldValue={setFieldValue}
                         />
                     </HiddenFields>
                 )}
 			</div>
 		</AddProductField>
-        // <div style={{border: '1px solid red'}} key={index}>
-        //     <div onClick={()=> toggle(index)}>
-        //         <img src={Image} alt="test" height="56px" width="56px"/>
-        //         <p>Toggle heree</p>
-        //         {!open ? "+" : "-"}
-        //     </div>
-
-        //     {open && (
-        //         <div>
-        //         <p>accordion {index} is inactive</p>
-        //         <p>accordion {index} is inactive</p>
-        //         <p>accordion {index} is inactive</p>
-        //         <p>accordion {index} is inactive</p>
-        //         <p>accordion {index} is inactive</p>
-        //     </div>
-        //     )}
-        // </div>
 	);
 };
 

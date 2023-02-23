@@ -4,11 +4,27 @@ import InputField from '../../components/global/inputField/InputField';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import Button from '../../components/global/button/Button';
+import axios from 'axios';
+import { base_url_vendors } from '../../utils/utils';
 
 // Form validation
 let validationSchema = Yup.object().shape({
 	email: Yup.string().email('Invalid email address').required('Required'),
 });
+
+const passwordReset =async(userData, setSubmitting)=> {
+	console.log(userData)
+	try {
+		const res = await axios.post(`${base_url_vendors}/password/reset`, userData);
+		const data = res.data;
+		console.log(data)
+		setSubmitting(false)
+	} catch (err) {
+		let error = err.response ? err.response.data : err.message;
+		console.log(error);
+		setSubmitting(false)
+	}
+}
 
 const ForgotPassword = () => {
 	return (
@@ -23,10 +39,7 @@ const ForgotPassword = () => {
 					}}
 					validationSchema={validationSchema}
 					onSubmit={(values, { setSubmitting }) => {
-						setTimeout(() => {
-							alert(JSON.stringify(values, null, 2));
-							setSubmitting(false);
-						}, 400);
+						passwordReset(values, setSubmitting)
 					}}
 				>
 					{({
@@ -34,6 +47,7 @@ const ForgotPassword = () => {
 						handleSubmit,
 						isValid,
 						dirty,
+						isSubmitting
 					}) => (
 						<form onSubmit={handleSubmit}>
 							<InputField
@@ -44,6 +58,7 @@ const ForgotPassword = () => {
 							<Button
 								text='Send instructions'
 								type='submit'
+								isLoading={isSubmitting}
 								disabled={!(isValid && dirty)}
 							/>
 						</form>

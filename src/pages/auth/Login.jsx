@@ -6,8 +6,9 @@ import InputField from '../../components/global/inputField/InputField';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import Button from '../../components/global/button/Button';
-import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../../redux/slices/authSlice';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { base_url_vendors } from '../../utils/utils';
 
 const LoginContainer = styled('div')`
 	.form-extra {
@@ -32,10 +33,23 @@ let validationSchema = Yup.object().shape({
 		.required('Please enter password'),
 });
 
+const login =async(userData, setSubmitting)=> {
+	console.log(userData)
+	try {
+		const res = await axios.post(`${base_url_vendors}/login`, userData);
+		const data = res.data;
+		console.log(data)
+		setSubmitting(false)
+	} catch (err) {
+		let error = err.response ? err.response.data : err.message;
+		console.log(error);
+		setSubmitting(false)
+	}
+}
+
 const Login = () => {
-	const dispatch = useDispatch()
-	const {isLoading, userInfo, accessToken} = useSelector((state)=> state.auth)
-	console.log(isLoading, userInfo, accessToken)
+	const {userInfo, accessToken} = useSelector((state)=> state.auth)
+	console.log(userInfo, accessToken)
 	return (
 		<LoginContainer>
 			<AuthLayout title='Sign in to Giftly'>
@@ -45,8 +59,8 @@ const Login = () => {
 						password: '',
 					}}
 					validationSchema={validationSchema}
-					onSubmit={(values) => {
-						dispatch(login(values))
+					onSubmit={(values, { setSubmitting }) => {
+						login(values, setSubmitting)
 					}}
 				>
 					{({
@@ -56,6 +70,7 @@ const Login = () => {
 						handleChange,
 						handleBlur,
 						handleSubmit,
+						isSubmitting,
 						isValid,
 						dirty,
 					}) => (
@@ -76,7 +91,7 @@ const Login = () => {
 								text='Sign in'
 								type='submit'
 								disabled={!(isValid && dirty)}
-								isLoading={isLoading}
+								isLoading={isSubmitting}
 							/>
 						</form>
 					)}

@@ -17,7 +17,6 @@ const validationSchema = Yup.object().shape({
             product_description: Yup.string(),
             product_category: Yup.string(),
             display_price: Yup.string(),
-            tags: Yup.string(),
         })
       )
   });
@@ -64,14 +63,15 @@ const SingleProduct = () => {
                                     product_description: '',
                                     product_category: '',
                                     display_price: '',
-                                    tags: "",
+                                    tags: ''
                                 }
                             ]
 						}}
 						validationSchema={validationSchema}
-						onSubmit={(values) => {
+						onSubmit={(values, {setSubmitting}) => {
                             setTimeout(() => {
                                 alert(JSON.stringify(values, null, 2));
+                                setSubmitting(false);
                             }, 400);
 						}}
 					>
@@ -113,7 +113,7 @@ const SingleProduct = () => {
                                                         product_description: '',
                                                         product_category: '',
                                                         display_price: '',
-                                                        tags: "",
+                                                        tags: [],
                                                     });								
                                                 }}
                                             />
@@ -124,7 +124,6 @@ const SingleProduct = () => {
 									<Button
                                         className="secondary"
 										text='Cancel'
-										type='submit'
 										onClick={()=> navigate(-1)}
 									/>
 									<Button

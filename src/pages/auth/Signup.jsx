@@ -6,6 +6,8 @@ import InputField from '../../components/global/inputField/InputField';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import Button from '../../components/global/button/Button';
+import axios from 'axios';
+import { base_url_vendors } from '../../utils/utils';
 
 const SignupContainer = styled.div`
 	.flex_field {
@@ -27,8 +29,8 @@ const phoneRegex = /^[0-9]*$/;
 
 // Form validation
 let validationSchema = Yup.object().shape({
-	firstname: Yup.string().required('Required'),
-	lastname: Yup.string().required('Required'),
+	first_name: Yup.string().required('Required'),
+	last_name: Yup.string().required('Required'),
 	email: Yup.string().email('Invalid email address').required('Required'),
 	password: Yup.string()
 		.min(8, 'Your password must contain at least 8 characters.')
@@ -44,10 +46,24 @@ let validationSchema = Yup.object().shape({
 			}
 			return true;
 		}),
-	confirmPassword: Yup.string()
+	password_confirmation: Yup.string()
 		.oneOf([Yup.ref('password'), null], 'Passwords do not match')
 		.required('Field cannot be empty'),
 });
+
+const signup =async(userData, setSubmitting)=> {
+	console.log(userData);
+	try {
+		const res = await axios.post(`${base_url_vendors}/register`, userData);
+		const data = res.data;
+		console.log(data)
+		setSubmitting(false)
+	} catch (err) {
+		let error = err.response ? err.response.data : err.message;
+		console.log(error);
+		setSubmitting(false)
+	}
+}
 
 const Signup = () => {
 	return (
@@ -55,19 +71,16 @@ const Signup = () => {
 			<AuthLayout title='Sign up to Giftly vendors'>
 				<Formik
 					initialValues={{
-						firstname: '',
-						lastname: '',
+						first_name: '',
+						last_name: '',
 						phone: '',
 						email: '',
 						password: '',
-						confirmPassword: '',
+						password_confirmation: '',
 					}}
 					validationSchema={validationSchema}
 					onSubmit={(values, { setSubmitting }) => {
-						setTimeout(() => {
-							alert(JSON.stringify(values, null, 2));
-							setSubmitting(false);
-						}, 400);
+						signup(values, setSubmitting)
 					}}
 				>
 					{({
@@ -83,14 +96,14 @@ const Signup = () => {
 						<form onSubmit={handleSubmit}>
 							<div className='flex_field'>
 								<InputField
-									name='firstname'
+									name='first_name'
 									label='First name'
-									value={values.firstname}
+									value={values.first_name}
 								/>
 								<InputField
-									name='lastname'
+									name='last_name'
 									label='Last name'
-									value={values.lastname}
+									value={values.last_name}
 								/>
 							</div>
 							<InputField
@@ -110,10 +123,10 @@ const Signup = () => {
 								value={values.password}
 							/>
 							<InputField
-								name='confirmPassword'
+								name='password_confirmation'
 								label='Confirm Password'
 								type='password'
-								value={values.confirmPassword}
+								value={values.password_confirmation}
 							/>
 
 							<Button

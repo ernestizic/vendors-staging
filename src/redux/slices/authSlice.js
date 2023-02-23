@@ -2,23 +2,22 @@ import { createSlice } from '@reduxjs/toolkit';
 import { base_url_vendors } from '../../utils/utils';
 import axios from 'axios';
 
-// LOGIN USER
-export const login = (userData) => async (dispatch, getState) => {
-	console.log(userData)
-	dispatch(loginPending());
+// Sign up USER
+export const signup = (userData) => async (dispatch, getState) => {
+	console.log(userData);
+	dispatch(registerPending());
 	try {
-		const res = await axios.post(`${base_url_vendors}/login`, userData);
+		const res = await axios.post(`${base_url_vendors}/register`, userData);
 		const data = res.data;
-		dispatch(loginSuccess(data));
+		dispatch(registerSuccess(data));
 	} catch (err) {
 		let error = err.response ? err.response.data : err.message;
-		dispatch(loginFailure());
+		dispatch(registerFailure());
 		console.log(error);
 	}
 };
 
 const initialState = {
-	isLoading: false,
 	accessToken: null,
 	userInfo: null,
 };
@@ -39,14 +38,15 @@ const authSlice = createSlice({
 				...state,
 			};
 		},
-		// LOGIN REDUCER
-		loginPending: (state, action) => {
+
+		// REGISTER REDUCER
+		registerPending: (state, action) => {
 			return {
 				...state,
 				isLoading: true,
 			};
 		},
-		loginSuccess: (state, action) => {
+		registerSuccess: (state, action) => {
 			return {
 				...state,
 				isLoading: false,
@@ -54,7 +54,7 @@ const authSlice = createSlice({
 				// accessToken: action.payload.token,
 			};
 		},
-		loginFailure: (state, action) => {
+		registerFailure: (state, action) => {
 			return {
 				...state,
 				isLoading: false,
@@ -66,6 +66,12 @@ const authSlice = createSlice({
 });
 
 // Actions generated from slice
-export const { setToken, setUser, loginFailure, loginPending, loginSuccess } = authSlice.actions;
+export const {
+	setToken,
+	setUser,
+	registerPending,
+	registerSuccess,
+	registerFailure,
+} = authSlice.actions;
 
 export default authSlice.reducer;
