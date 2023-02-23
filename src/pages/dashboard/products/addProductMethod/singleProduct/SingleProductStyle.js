@@ -38,10 +38,16 @@ export const ImageContainer = styled.div`
     height: ${({open})=> open ? "300px" : "56px"};
     border: 1px dashed var(--line-text);
     border-radius: 8px;
-
     display: flex;
     align-items: center;
     justify-content: center;
+
+    .file-upload {
+        cursor: pointer;
+    }
+    input[type='file']{
+          display: none;
+      }
 
     button {
         position: absolute;
@@ -52,6 +58,7 @@ export const ImageContainer = styled.div`
         border: none;
         background: rgba(247, 247, 247, 0.5);
         border-radius: 30px;
+        cursor: pointer;
     }
     .product-image {
         object-fit: cover;

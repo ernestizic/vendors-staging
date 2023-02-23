@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import AuthLayout from '../../components/layout/authLayout/AuthLayout';
 import InputField from '../../components/global/inputField/InputField';
@@ -49,7 +49,9 @@ const login =async(userData, setSubmitting)=> {
 
 const Login = () => {
 	const {userInfo, accessToken} = useSelector((state)=> state.auth)
-	console.log(userInfo, accessToken)
+	// console.log(userInfo, accessToken)
+	const navigate = useNavigate()
+
 	return (
 		<LoginContainer>
 			<AuthLayout title='Sign in to Giftly'>
@@ -61,6 +63,7 @@ const Login = () => {
 					validationSchema={validationSchema}
 					onSubmit={(values, { setSubmitting }) => {
 						login(values, setSubmitting)
+						navigate("/")
 					}}
 				>
 					{({
