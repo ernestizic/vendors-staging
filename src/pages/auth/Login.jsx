@@ -6,9 +6,9 @@ import InputField from '../../components/global/inputField/InputField';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import Button from '../../components/global/button/Button';
-import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { base_url_vendors } from '../../utils/utils';
+import { useDispatch, useSelector } from 'react-redux';
 import { setAlert } from '../../redux/slices/alertSlice';
 
 const LoginContainer = styled('div')`
@@ -36,13 +36,13 @@ let validationSchema = Yup.object().shape({
 
 // Login Component
 const Login = () => {
+	const navigate = useNavigate()
 	const dispatch = useDispatch();
 	const { userInfo, accessToken } = useSelector((state) => state.auth);
 	console.log(userInfo, accessToken);
 
 	// Login user function
 	const login = async (userData, setSubmitting) => {
-		console.log(userData);
 		try {
 			const res = await axios.post(`${base_url_vendors}/login`, userData, {
 				headers: {
@@ -69,7 +69,9 @@ const Login = () => {
 					}}
 					validationSchema={validationSchema}
 					onSubmit={(values, { setSubmitting }) => {
-						login(values, setSubmitting);
+						// login(values, setSubmitting);
+						navigate("/")
+
 					}}
 				>
 					{({

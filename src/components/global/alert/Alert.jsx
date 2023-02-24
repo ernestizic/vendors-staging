@@ -16,10 +16,12 @@ const AlertContainer = styled.div`
     background: var(--accent_3-primary);
     width: 327px;
     max-width: 327px;
-    word-break: break-all;
+    word-break: break-word;
     border-radius: 4px;
     padding: 14px 16px;
     button {
+        margin-left: 10px;
+        border: none;
         background: inherit;
         cursor: pointer;
         img {

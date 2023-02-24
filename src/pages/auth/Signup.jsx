@@ -8,6 +8,8 @@ import { Formik } from 'formik';
 import Button from '../../components/global/button/Button';
 import axios from 'axios';
 import { base_url_vendors } from '../../utils/utils';
+import { useDispatch } from 'react-redux';
+import { setAlert } from '../../redux/slices/alertSlice';
 
 const SignupContainer = styled.div`
 	.flex_field {
@@ -51,21 +53,25 @@ let validationSchema = Yup.object().shape({
 		.required('Field cannot be empty'),
 });
 
-const signup =async(userData, setSubmitting)=> {
-	console.log(userData);
-	try {
-		const res = await axios.post(`${base_url_vendors}/register`, userData);
-		const data = res.data;
-		console.log(data)
-		setSubmitting(false)
-	} catch (err) {
-		let error = err.response ? err.response.data : err.message;
-		console.log(error);
-		setSubmitting(false)
-	}
-}
-
+// Signup component
 const Signup = () => {
+	const dispatch = useDispatch();
+
+	// signup user function
+	const signup =async(userData, setSubmitting)=> {
+		console.log(userData);
+		try {
+			const res = await axios.post(`${base_url_vendors}/register`, userData);
+			const data = res.data;
+			console.log(data)
+			setSubmitting(false)
+		} catch (err) {
+			let error = err.response ? err.response.data.message : err.message;
+			dispatch(setAlert({ message: error }));
+			console.log(error);
+			setSubmitting(false)
+		}
+	}
 	return (
 		<SignupContainer>
 			<AuthLayout title='Sign up to Giftly vendors'>
@@ -90,6 +96,7 @@ const Signup = () => {
 						handleChange,
 						handleBlur,
 						handleSubmit,
+						isSubmitting,
 						isValid,
 						dirty,
 					}) => (
@@ -133,6 +140,7 @@ const Signup = () => {
 								text='Continue'
 								type='submit'
 								disabled={!(isValid && dirty)}
+								isLoading={isSubmitting}
 							/>
 						</form>
 					)}
