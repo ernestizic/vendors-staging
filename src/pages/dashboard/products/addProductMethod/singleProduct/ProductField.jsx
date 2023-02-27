@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import GalleryIcon from '../../../../../assets/icons/gallery-export.svg';
 import CloseIcon from '../../../../../assets/icons/close-square-pink.svg';
 import ArrowIcon from '../../../../../assets/icons/arrow-down.svg';
@@ -33,6 +34,31 @@ const ProductField = ({
 	toggle,
 	open,
 }) => {
+	const [dragActive, setDragActive] = React.useState(false);
+  
+	// handle drag events
+	const handleDrag =(e)=> {
+	  e.preventDefault();
+	  e.stopPropagation();
+	  if (e.type === "dragenter" || e.type === "dragover") {
+		setDragActive(true);
+	  } else if (e.type === "dragleave") {
+		console.log("drag leave")
+		setDragActive(false);
+	  }
+	};
+
+	// triggers when file is dropped
+	const handleDrop =async(e)=> {
+		e.preventDefault();
+		e.stopPropagation();
+		setDragActive(false);
+		if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+			const base64file = await toBase64(e.dataTransfer.files[0]);
+			setFieldValue(`products[${index}].product_image`, base64file);
+		}
+	};
+
 	// On image selection
 	const onImageChange = async (e) => {
 		const base64file = await toBase64(e.target.files[0]);
@@ -48,7 +74,7 @@ const ProductField = ({
 					<img src={ArrowIcon} alt='arrow' />
 				</button>
 			)}
-			<ImageContainer open={open}>
+			<ImageContainer open={open} onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={handleDrop} dragActive={dragActive}>
 				{product.product_image ? (
 					// if an image is chosen, return image
 					<>
@@ -92,7 +118,7 @@ const ProductField = ({
 								</label>
 								<input
 									type='file'
-									accept='image/*'
+									accept='image/jpeg, image/jpg, image/png'
 									id={`file-${index}`}
 									name={`products[${index}].product_image`}
 									onChange={onImageChange}
@@ -139,8 +165,7 @@ const ProductField = ({
 							required
 						/>
 						<TagInputField
-							// value={product.tags}
-							name={`products[${index}].tags`}
+							name={`products[${index}].product_tags`}
 							label='Add product tags'
 							setFieldValue={setFieldValue}
 						/>
@@ -150,5 +175,16 @@ const ProductField = ({
 		</AddProductField>
 	);
 };
+
+// PropTypes
+ProductField.propTypes = {
+	product: PropTypes.object.isRequired,
+	onChange: PropTypes.func,
+	index: PropTypes.number,
+	setFieldValue: PropTypes.func,
+	toggle: PropTypes.func,
+	open: PropTypes.bool
+};
+
 
 export default ProductField;

@@ -41,6 +41,7 @@ export const ImageContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    background: ${({dragActive}) => dragActive ? "var(--input-bg)" : "#fff"};
 
     .file-upload {
         cursor: pointer;

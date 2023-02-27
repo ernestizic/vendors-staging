@@ -63,7 +63,7 @@ const SingleProduct = () => {
                                     product_description: '',
                                     product_category: '',
                                     display_price: '',
-                                    tags: ''
+                                    product_tags: ''
                                 }
                             ]
 						}}
@@ -113,7 +113,7 @@ const SingleProduct = () => {
                                                         product_description: '',
                                                         product_category: '',
                                                         display_price: '',
-                                                        tags: [],
+                                                        product_tags: "",
                                                     });								
                                                 }}
                                             />

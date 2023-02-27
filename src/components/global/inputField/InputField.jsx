@@ -28,9 +28,6 @@ const InputField = ({ type, name, value, label, required, width, bg, readonly, .
 					value={value}
 					disabled={readonly}
 					className={type === "password" ? "password" : ""}
-					onChange={(e)=> {
-						field.onChange(e);
-					}}
 				/>
 				{type === 'password' &&
 					(showPassword ? (
@@ -60,7 +57,7 @@ InputField.defaultProps = {
 
 // PropTypes
 InputField.propTypes = {
-	value: PropTypes.string.isRequired,
+	value: PropTypes.any.isRequired,
 	name: PropTypes.string.isRequired,
 	label: PropTypes.string.isRequired,
 	type: PropTypes.string,

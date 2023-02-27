@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import CloseIcon from '../../../assets/icons/close-square-white.svg'
-import { useField } from 'formik';
 import styled from 'styled-components';
 
 const FieldContainer = styled.div`
@@ -32,7 +32,6 @@ const FieldContainer = styled.div`
 	}
 `;
 const TagInputContainer = styled.div`
-	/* border: 1px solid #000; */
 	background: var(--input-bg);
 	padding: 0 24px;
 	border-radius: 8px;
@@ -72,10 +71,10 @@ const TagInputContainer = styled.div`
 		line-height: 24px;
 	}
 `;
-const TagInputField = ({ name, label, setFieldValue, value, ...props }) => {
+const TagInputField = ({ name, label, setFieldValue }) => {
 	const [tags, setTags] = useState([]);
-	const [field, meta] = useField({ ...props, name });
 
+	// Add a tag
 	function handleKeyDown(e) {
 		// // If user clicks spacebar
 		if (e.key === 'Space' || e.keyCode === 32) {
@@ -84,18 +83,24 @@ const TagInputField = ({ name, label, setFieldValue, value, ...props }) => {
 			// If the value is empty, return
 			if (!value.trim()) return;
 			// Add the value to the tags array and clear input
-			setTags([...tags, value]);
+			const lastAddedTag = [...tags, value]
+			setTags(lastAddedTag);
+			setFieldValue(name, lastAddedTag.join(","))
 			e.target.value = '';
 		}
 	}
+
+	// Remove tag
 	function removeTag(index) {
-		setTags(tags.filter((el, i) => i !== index));
+		const tagsLeft = tags.filter((el, idx) => idx !== index)
+		setTags(tagsLeft);
+		setFieldValue(name, tagsLeft.join(","))
 	}
 
 	return (
 		<FieldContainer>
 			<label
-				className={value || tags.length > 0 ? 'filled' : ''}
+				className={tags.length > 0 ? 'filled' : ''}
 				htmlFor={name}
 			>
 				{label}
@@ -111,18 +116,20 @@ const TagInputField = ({ name, label, setFieldValue, value, ...props }) => {
 					onKeyDown={handleKeyDown}
 					type='text'
 					className='tags-input'
-					{...props}
-					{...field}
 					id={name}
-					value={value}
 					autoComplete='off'
-                    onChange={(e)=> {
-						field.onChange(e);
-					}}
 				/>
 			</TagInputContainer>
 		</FieldContainer>
 	);
+};
+
+// PropTypes
+TagInputField.propTypes = {
+	value: PropTypes.string,
+	name: PropTypes.string.isRequired,
+	label: PropTypes.string.isRequired,
+	setFieldValue: PropTypes.func.isRequired
 };
 
 export default TagInputField;
