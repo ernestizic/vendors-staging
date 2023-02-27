@@ -22,6 +22,9 @@ const CardFlex = styled.div`
     margin: 48px 0;
     display: flex;
     gap: 24px;
+    @media (max-width: 480px) {
+        flex-direction: column;
+    }
 `
 
 const cardData = [

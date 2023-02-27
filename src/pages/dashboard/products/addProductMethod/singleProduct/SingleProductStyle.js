@@ -29,6 +29,9 @@ export const AddProductField = styled.div`
         right: 0;
         background: inherit;
     }
+    /* @media (max-width: 480px) {
+        flex-direction: column;
+    } */
 `
 
 export const ImageContainer = styled.div`

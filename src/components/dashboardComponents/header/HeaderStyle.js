@@ -11,6 +11,12 @@ export const HeaderContainer = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	@media only screen and (max-width: 768px) {
+		width: 100%;
+		padding: 16px;
+		position: fixed;
+		width: 100%;
+	}
 `;
 
 export const FirstSection = styled.div`
@@ -33,6 +39,24 @@ export const FirstSection = styled.div`
 export const SecondSection = styled.div`
 	display: flex;
 	gap: 24px;
+	.mobile-search-icon {
+		display: none;
+	}
+	.mobile-menu {
+		display: none;
+	}
+	@media only screen and (max-width: 768px) {
+		button {
+			display: none;
+		}
+		.mobile-search-icon {
+			display: block;
+		}
+		.mobile-menu {
+			display: block;
+			margin-left: 20px;
+		}
+	}
 `;
 
 export const SearchBox = styled.div`
@@ -70,5 +94,8 @@ export const SearchBox = styled.div`
 		&:hover {
 			cursor: pointer;
 		}
+	}
+	@media only screen and (max-width: 768px) {
+		display: none;
 	}
 `;

@@ -44,7 +44,7 @@ const Login = () => {
 	// Login user function
 	const login = async (userData, setSubmitting) => {
 		try {
-			const res = await axios.post(`${base_url_vendors}/login`, userData, {
+			const res = await axios.post(`${base_url_vendors}/admin/login`, userData, {
 				headers: {
 					'Content-Type': 'application/json',
 				},
@@ -55,6 +55,7 @@ const Login = () => {
 		} catch (err) {
 			let error = err.response ? err.response.data.data.email[0] : err.message;
 			dispatch(setAlert({ message: error }));
+			console.log(err.response.data)
 			setSubmitting(false);
 		}
 	};
@@ -69,8 +70,7 @@ const Login = () => {
 					}}
 					validationSchema={validationSchema}
 					onSubmit={(values, { setSubmitting }) => {
-						// login(values, setSubmitting);
-						navigate("/")
+						login(values, setSubmitting);
 
 					}}
 				>
