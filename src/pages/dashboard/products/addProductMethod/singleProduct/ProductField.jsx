@@ -69,17 +69,27 @@ const ProductField = ({
 
 	return (
 		<AddProductField onClick={() => toggle(index)} open={open}>
+			{/* Only show dropdown arrow when accordion is closed */}
 			{!open && (
 				<button className='accordion-arrow'>
-					<img src={ArrowIcon} alt='arrow' />
+					<img src={ArrowIcon} alt='arrow' width="20px" />
 				</button>
 			)}
-			<ImageContainer open={open} onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={handleDrop} dragActive={dragActive}>
+
+			<ImageContainer 
+				open={open} 
+				onDragEnter={handleDrag} 
+				onDragLeave={handleDrag} 
+				onDragOver={handleDrag} 
+				onDrop={handleDrop} 
+				dragActive={dragActive}
+				isImageAvailable = {product.product_image}
+			>
 				{product.product_image ? (
 					// if an image is chosen, return image
 					<>
 						{open && (
-							// display the close icon only if the accordion item is open
+							// display the delete icon only if the accordion item is open
 							<button
 								className='delete-btn'
 								onClick={() =>
@@ -91,7 +101,7 @@ const ProductField = ({
 						)}
 						<img
 							src={product.product_image}
-							alt='test'
+							alt='product'
 							width='100%'
 							height='100%'
 							className='product-image'
@@ -130,12 +140,11 @@ const ProductField = ({
 			</ImageContainer>
             
             {/* fields container */}
-			<div>
+			<div className='fields-container'>
 				<InputField
 					value={product.product_name}
 					name={`products[${index}].product_name`}
 					label='Product name'
-					width='500px'
 					required
 					readonly={!open}
 					bg={!open && '#fff'}
@@ -161,7 +170,6 @@ const ProductField = ({
 							value={product.display_price}
 							name={`products[${index}].display_price`}
 							label='Display price'
-							width='500px'
 							required
 						/>
 						<TagInputField

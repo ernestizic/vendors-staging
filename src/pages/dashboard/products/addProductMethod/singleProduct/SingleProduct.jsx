@@ -44,7 +44,7 @@ const SingleProduct = () => {
 		<>
 			<Header
 				title='Add products'
-				subTitle='Choose method / Add product details / Another one'
+				subTitle='Choose method / Add product details'
 				goBack
 			/>
 			<SingleProductContainer>

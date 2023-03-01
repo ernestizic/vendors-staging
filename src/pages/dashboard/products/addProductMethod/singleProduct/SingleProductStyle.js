@@ -8,6 +8,9 @@ export const SingleProductContainer = styled.div`
             padding-top: 4px;
         }
     }
+    @media only screen and (max-width: 768px) {
+        padding: 16px;
+    }
 `
 export const AddProductContainer = styled.div`
     max-width: 816px;
@@ -16,7 +19,6 @@ export const AddProductContainer = styled.div`
 `
 
 export const AddProductField = styled.div`
-    /* border: 1px solid blue; */
     position: relative;
     display: flex;
     gap: 16px;
@@ -25,13 +27,23 @@ export const AddProductField = styled.div`
 
     .accordion-arrow {
         border: none;
+        z-index: 1;
         position: absolute;
-        right: 0;
+        right: -30px;
         background: inherit;
     }
-    /* @media (max-width: 480px) {
-        flex-direction: column;
-    } */
+    .fields-container {
+        width: 500px;
+    }
+    @media only screen and (max-width: 768px) {
+        flex-direction: ${({open})=> open ? "column" : "row"};
+        .fields-container {
+            width: 100%;
+        }
+        .accordion-arrow {
+            right: 0;
+        }
+    }
 `
 
 export const ImageContainer = styled.div`
@@ -39,7 +51,7 @@ export const ImageContainer = styled.div`
     width: ${({open})=> open ? "300px" : "56px"};
     max-width: 300px;
     height: ${({open})=> open ? "300px" : "56px"};
-    border: 1px dashed var(--line-text);
+    border: ${({isImageAvailable}) => isImageAvailable ? "none" : "1px dashed var(--line-text)"};
     border-radius: 8px;
     display: flex;
     align-items: center;
@@ -80,6 +92,9 @@ export const ImageContainer = styled.div`
         span{
             color: var(--primary-main);
         }
+    }
+    @media only screen and (max-width: 500px) {
+        min-width: 56px;
     }
 `
 

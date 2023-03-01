@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ArrowDown from '../../../assets/icons/arrow-down.svg';
 import OverviewIcon from '../../../assets/icons/overview-icon.svg'
 import ProductsIcon from '../../../assets/icons/sidebar-product-icon.svg'
@@ -71,6 +72,13 @@ const Sidebar = ({showSidebar, setShowSidebar}) => {
       </div>
 		</SidebarContainer>
 	);
+};
+
+
+// PropTypes
+Sidebar.propTypes = {
+	showSidebar: PropTypes.bool,
+	setShowSidebar: PropTypes.func,
 };
 
 export default Sidebar;

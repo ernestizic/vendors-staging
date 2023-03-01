@@ -44,7 +44,7 @@ const Login = () => {
 	// Login user function
 	const login = async (userData, setSubmitting) => {
 		try {
-			const res = await axios.post(`${base_url_vendors}/admin/login`, userData, {
+			const res = await axios.post(`${base_url_vendors}/login`, userData, {
 				headers: {
 					'Content-Type': 'application/json',
 				},

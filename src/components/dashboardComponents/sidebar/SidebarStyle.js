@@ -17,7 +17,10 @@ export const SidebarContainer = styled.div`
 		max-height: 100vh;
 		color: black;
 		transition: 0.2s ease;
-		overflow: auto;		
+		overflow: auto;	
+		&::-webkit-scrollbar {
+			display: none;
+		}	
 	}
 	@media only screen and (max-width: 768px) {
 		.sidebar {
