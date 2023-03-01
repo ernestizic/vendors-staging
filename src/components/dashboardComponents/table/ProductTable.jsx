@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import BoostIcon from '../../../assets/icons/boost-icon-pink.svg';
 import Tag from '../../global/Tag';
-import { TableContainer, CheckBox, NameContainer } from './ProductTableStyle';
+import { TableContainer, CheckBox, NameContainer, PaginationContainer } from './ProductTableStyle';
+import ReactPaginate from 'react-paginate';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const displayTags = (tags) => {
     return (
@@ -22,6 +24,29 @@ const displayTags = (tags) => {
 };
 
 const ProductTable = ({ columns, data }) => {
+	const {page} = useParams()
+	const navigate = useNavigate()
+
+	const [currentPage, setCurrentPage] = useState(page);
+	const [dataPerPage] = useState(6);
+
+	const pageVisited = currentPage * dataPerPage;
+	// const indexOfFirstData = pageVisited - dataPerPage;
+
+	const paginatedData = data.slice(pageVisited, pageVisited + dataPerPage);
+	const pageCount = Math.ceil(data.length / dataPerPage);
+
+
+	useEffect(()=> {
+		setCurrentPage(page)
+	}, [page])
+
+	// Change page
+	const handlePageClick = ({ selected }) => {
+		navigate(`/products/${selected}`)
+		setCurrentPage(selected);
+	};
+
 	return (
 		<div>
 			<TableContainer>
@@ -38,7 +63,7 @@ const ProductTable = ({ columns, data }) => {
 					</thead>
 
 					<tbody>
-						{data.map((data, idx) => (
+						{paginatedData.map((data, idx) => (
 							<tr key={data.id}>
 								<td>
 									<CheckBox></CheckBox>
@@ -70,6 +95,28 @@ const ProductTable = ({ columns, data }) => {
 					</tbody>
 				</table>
 			</TableContainer>
+
+			<PaginationContainer>
+				<div>
+					<ReactPaginate
+						breakLabel='...'
+						nextLabel='>'
+						previousLabel='<'
+						initialPage={currentPage}
+						pageCount={pageCount}
+						onPageChange={handlePageClick}
+
+						containerClassName='pagination-container'
+						pageLinkClassName='page-button-a'
+						previousLinkClassName='previousBtn-a'
+						nextLinkClassName='nextBtn-a'
+						activeLinkClassName='active-page-button'
+						renderOnZeroPageCount={null}
+					/>
+					<p className='body-sm-medium colorBody'>8/50 products</p>
+				</div>
+				<p>Page 1 of 7</p>
+			</PaginationContainer>
 		</div>
 	);
 };

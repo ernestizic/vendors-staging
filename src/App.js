@@ -21,9 +21,10 @@ function App() {
       {alert && <Alert message={msg.message} />}
       <Router>
         <Routes>
-          <Route path="/" element={<Navigate to="/products" />} />
+          <Route path="/" element={<Navigate to="/products/0" />} />
+          <Route path="/products" element={<Navigate to="/products/0" />} />
           <Route path="/" element={<DashboardLayout />}>
-            <Route path="/products" element={<ProductPage />} />
+            <Route path="/products/:page" element={<ProductPage />} />
             <Route path="/add-product" element={<AddProductMethod />} />
             <Route path="add-product/add-product-details" element={<SingleProduct />} />
             <Route path='/overview' element={<OverviewPage />} />

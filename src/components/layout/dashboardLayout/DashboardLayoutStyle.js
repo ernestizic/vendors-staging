@@ -11,7 +11,7 @@ export const DashboardContainer = styled.div`
         margin-left: 240px;
         max-height: 100vh;
         overflow: auto;
-        padding-bottom: 89px;
+        padding-bottom: 54px;
         @media only screen and (max-width: 768px) { 
             margin: 0;
             padding-top: 110px;

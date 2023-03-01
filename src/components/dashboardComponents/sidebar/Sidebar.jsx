@@ -19,7 +19,7 @@ const menuList = [
     },
     {
       title: "Products",
-      slug: "products",
+      slug: "products/0",
       icon: ProductsIcon,
     },
     {

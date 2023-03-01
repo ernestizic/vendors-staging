@@ -27,7 +27,7 @@ export const TableContainer = styled.div`
             }
         }
         td {
-            /* border: 1px solid red; */
+            border-bottom: 1px solid var(--line-text);
             padding: 16px 8px;
             white-space: nowrap;
         }
@@ -61,5 +61,45 @@ export const NameContainer = styled.div`
         display: flex;
         align-items: center;
         gap: 8px;
+    }
+`
+
+export const PaginationContainer = styled.div`
+    margin-top: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--input-bg);
+    border-radius: 8px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    padding: 12px 16px;
+    & > div {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+    
+    .pagination-container{
+        /* padding: 12px 16px; */
+        /* border: 1px solid blue; */
+        list-style-type: none;
+        display: flex;
+        gap: 10px;
+    }
+    
+    .page-button-a, .previousBtn-a, .nextBtn-a {
+        background: #fff;
+        padding: 3px 10px;
+        border-radius: 4px;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+    .active-page-button {
+        background: var(--title-active);
+        color: #fff
     }
 `
