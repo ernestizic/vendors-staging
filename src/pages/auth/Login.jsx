@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import AuthLayout from '../../components/layout/authLayout/AuthLayout';
 import InputField from '../../components/global/inputField/InputField';
@@ -36,7 +36,7 @@ let validationSchema = Yup.object().shape({
 
 // Login Component
 const Login = () => {
-	const navigate = useNavigate()
+	// const navigate = useNavigate()
 	const dispatch = useDispatch();
 	const { userInfo, accessToken } = useSelector((state) => state.auth);
 	console.log(userInfo, accessToken);

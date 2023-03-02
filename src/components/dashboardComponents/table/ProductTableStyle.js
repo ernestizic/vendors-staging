@@ -83,23 +83,32 @@ export const PaginationContainer = styled.div`
     }
     
     .pagination-container{
-        /* padding: 12px 16px; */
-        /* border: 1px solid blue; */
         list-style-type: none;
         display: flex;
         gap: 10px;
     }
-    
-    .page-button-a, .previousBtn-a, .nextBtn-a {
+    .page-button-a {
         background: #fff;
-        padding: 3px 10px;
         border-radius: 4px;
+        padding: 3px 10px;
         &:hover {
             cursor: pointer;
         }
     }
-    .active-page-button {
-        background: var(--title-active);
-        color: #fff
+
+    .previousBtn-a, .nextBtn-a {
+        padding: 5px 5px 3px;
+        background: #fff;
+        border-radius: 4px;
     }
+    .active-page-button {
+        color: #fff;
+        background: var(--title-active);
+    }
+    @media only screen and (max-width: 768px) {
+        overflow: hidden;
+		p{
+            display: none;
+        }
+	}
 `

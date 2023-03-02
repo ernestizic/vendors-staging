@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import BoostIcon from '../../../assets/icons/boost-icon-pink.svg';
+import AngleLeft from '../../../assets/icons/angle-left.svg'
+import AngleRight from '../../../assets/icons/angle-right.svg'
 import Tag from '../../global/Tag';
 import { TableContainer, CheckBox, NameContainer, PaginationContainer } from './ProductTableStyle';
 import ReactPaginate from 'react-paginate';
 import { useNavigate, useParams } from 'react-router-dom';
 
+// component to render list of tags
 const displayTags = (tags) => {
     return (
         <div className='flexRow' style={{ gap: '4px' }}>
@@ -23,32 +26,39 @@ const displayTags = (tags) => {
     );
 };
 
+// get next label icon for pagination
+const NextLabel=()=> {
+	return(
+		<img src={AngleRight} alt="arrow right" />
+	)
+}
+// Get previous label icon for pagination
+const PreviousLabel=()=> {
+	return(
+		<img src={AngleLeft} alt="arrow right" />
+	)
+}
+
 const ProductTable = ({ columns, data }) => {
 	const {page} = useParams()
 	const navigate = useNavigate()
 
-	const [currentPage, setCurrentPage] = useState(page);
+	const [currentPage, setCurrentPage] = useState(+page);
 	const [dataPerPage] = useState(6);
 
 	const pageVisited = currentPage * dataPerPage;
-	// const indexOfFirstData = pageVisited - dataPerPage;
 
 	const paginatedData = data.slice(pageVisited, pageVisited + dataPerPage);
 	const pageCount = Math.ceil(data.length / dataPerPage);
 
-
-	useEffect(()=> {
-		setCurrentPage(page)
-	}, [page])
-
 	// Change page
 	const handlePageClick = ({ selected }) => {
-		navigate(`/products/${selected}`)
 		setCurrentPage(selected);
+		navigate(`/products/${selected}`)
 	};
 
 	return (
-		<div>
+		<>
 			<TableContainer>
 				<table>
 					<thead>
@@ -100,12 +110,12 @@ const ProductTable = ({ columns, data }) => {
 				<div>
 					<ReactPaginate
 						breakLabel='...'
-						nextLabel='>'
-						previousLabel='<'
-						initialPage={currentPage}
+						pageRangeDisplayed={3}
+						nextLabel={<NextLabel />}
+						previousLabel={<PreviousLabel />}
 						pageCount={pageCount}
 						onPageChange={handlePageClick}
-
+						initialPage={currentPage}
 						containerClassName='pagination-container'
 						pageLinkClassName='page-button-a'
 						previousLinkClassName='previousBtn-a'
@@ -113,11 +123,15 @@ const ProductTable = ({ columns, data }) => {
 						activeLinkClassName='active-page-button'
 						renderOnZeroPageCount={null}
 					/>
-					<p className='body-sm-medium colorBody'>8/50 products</p>
+					{paginatedData.length < dataPerPage ? (
+						<p className='body-sm-medium colorBody'>{data.length}/{data.length} products</p>
+					) : (
+						<p className='body-sm-medium colorBody'>{pageVisited + dataPerPage}/{data.length} products</p>
+					)}
 				</div>
-				<p>Page 1 of 7</p>
+				<p>Page {currentPage + 1} of {pageCount}</p>
 			</PaginationContainer>
-		</div>
+		</>
 	);
 };
 

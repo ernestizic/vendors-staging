@@ -1,18 +1,18 @@
-import React, { useState, useEffect, useMemo } from 'react'
-import EmptyState from '../../../components/dashboardComponents/EmptyState'
-import Header from '../../../components/dashboardComponents/header/Header'
-import ProductTable from '../../../components/dashboardComponents/table/ProductTable'
-import { products } from '../../../utils/products'
-import { ProductPage } from './ProductStyle'
-
+import React, { useState, useEffect, useMemo } from 'react';
+import EmptyState from '../../../components/dashboardComponents/EmptyState';
+import Header from '../../../components/dashboardComponents/header/Header';
+import ProductTable from '../../../components/dashboardComponents/table/ProductTable';
+import { products } from '../../../utils/products';
+import { ProductPage } from './ProductStyle';
 
 const Products = () => {
-  const [tableData, setTableData] = useState([])
-  useEffect(()=> {
-    setTableData(products)
-  }, [tableData])
+	const [tableData, setTableData] = useState([]);
+	useEffect(() => {
+		setTableData(products);
+	}, [tableData]);
 
-  const columns = [
+	// Product Table columns to render
+	const columns = [
 		{
 			field: 'name',
 			header: 'Product name',
@@ -47,25 +47,26 @@ const Products = () => {
 		},
 	];
 
-  const data = useMemo(
+	const data = useMemo(
 		() =>
-      tableData?.map((d, idx) => {
-						return d;
-				  }),
+			tableData?.map((d, idx) => {
+				return d;
+			}),
 		[tableData]
 	);
 
-  return (
-    <>
-      <Header title="Product" />
-      {/* <EmptyState /> */}
-      <ProductPage>
+	return (
+		<>
+			<Header title='Product' />
+			{tableData.length < 1 ? (
+				<EmptyState />
+			) : (
+				<ProductPage>
+					<ProductTable columns={columns} data={data} />
+				</ProductPage>
+			)}
+		</>
+	);
+};
 
-        <ProductTable columns={columns} data={data}/>
-      </ProductPage>
-
-    </>
-  )
-}
-
-export default Products
+export default Products;
