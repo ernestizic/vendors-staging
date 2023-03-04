@@ -36,6 +36,11 @@ const Color = styled.div`
 	background: ${({color})=> color && color};
 	border-radius: 100%;
 `
+const EmptyList = styled.div`
+	text-align: center;
+	max-width:100%;
+	margin: 50px auto;
+`
 
 const Chart = () => {
 	const products = [
@@ -79,44 +84,53 @@ const Chart = () => {
 	})
 	return (
 		<>
-			<ChartContainer>
-				<ResponsiveContainer width="100%" height={200}>
-					<PieChart>
-						<Pie
-							data={chartData}
-							innerRadius={60}
-							outerRadius={90}
-							fill='#8884d8'
-							paddingAngle={0}
-							dataKey='value'
-						>
-							{chartData.map((entry, index) => (
-								<Cell
-									key={`cell-${index}`}
-									fill={COLORS[index % COLORS.length]}
-								/>
-							))}
-						</Pie>
-					</PieChart>
-				</ResponsiveContainer>
-				<div className='chart-inner-text'>
-					<p className='body-xl-semibold'>120</p>
-					<p className='body-sm-regular'>Clicks</p>
-				</div>
-			</ChartContainer>
-
-			<ChartContents>
-				<header className='body-xs-medium'>Products</header>
-				{info.map((d, idx) => (
-					<div className='body-xs-regular flexRow justifySpaceBetween item-row' key={idx}>
-						<div className='item-name'>
-							<Color color={d.color}/>
-							<p>{d.name}</p>
+			{chartData.length < 1 ? (
+				<EmptyList>
+					Nothing here
+				</EmptyList>
+			) : (
+				<>
+				
+					<ChartContainer>
+						<ResponsiveContainer width="100%" height={200}>
+							<PieChart>
+								<Pie
+									data={chartData}
+									innerRadius={60}
+									outerRadius={90}
+									fill='#8884d8'
+									paddingAngle={0}
+									dataKey='value'
+								>
+									{chartData.map((entry, index) => (
+										<Cell
+											key={`cell-${index}`}
+											fill={COLORS[index % COLORS.length]}
+										/>
+									))}
+								</Pie>
+							</PieChart>
+						</ResponsiveContainer>
+						<div className='chart-inner-text'>
+							<p className='body-xl-semibold'>120</p>
+							<p className='body-sm-regular'>Clicks</p>
 						</div>
-						<p>50% ({d.clicks})</p>
-					</div>
-				))}
-			</ChartContents>
+					</ChartContainer>
+
+					<ChartContents>
+						<header className='body-xs-medium'>Products</header>
+						{info.map((d, idx) => (
+							<div className='body-xs-regular flexRow justifySpaceBetween item-row' key={idx}>
+								<div className='item-name'>
+									<Color color={d.color}/>
+									<p>{d.name}</p>
+								</div>
+								<p>50% ({d.clicks})</p>
+							</div>
+						))}
+					</ChartContents>
+				</>
+			)}
 		</>
 	);
 };

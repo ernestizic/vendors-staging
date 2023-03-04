@@ -16,6 +16,12 @@ const ProductMethodContainer = styled.div`
             margin-bottom: 4px;
         }
     }
+    @media only screen and (max-width: 768px) {
+		padding: 16px;
+        button{
+            margin-left: 16px;
+        }
+	}
 `;
 
 const CardFlex = styled.div`
@@ -24,6 +30,7 @@ const CardFlex = styled.div`
     gap: 24px;
     @media (max-width: 480px) {
         flex-direction: column;
+        padding: 0 16px;
     }
 `
 

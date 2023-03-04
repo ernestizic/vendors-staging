@@ -16,6 +16,9 @@ export const MethodCard = styled.div`
             filter: brightness(0%);
         }
     }
+    @media only screen and (max-width: 768px) {
+		width: 100%;
+	}
 `
 export const CheckerContainer = styled.div`
     width: 20px;

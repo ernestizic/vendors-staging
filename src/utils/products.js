@@ -27,7 +27,7 @@ export const products = [
     },
     {
         id: 3,
-        name: "Birkins handbag a very long list of somethinggdfdf",
+        name: "Birkin red handbag",
         avatar: 'https://robohash.org/bag.png?size=50x50&set=set1',
 		boosted: false,
 		date: "31 Mar, 2099",
@@ -40,7 +40,7 @@ export const products = [
     },
     {
         id: 4,
-        name: "MTN HYNETFLEX",
+        name: "Aventus Creed Eau de Parfum",
         avatar: 'https://robohash.org/mtn.png?size=50x50&set=set1',
 		boosted: true,
 		date: "31 Mar, 2099",
@@ -53,7 +53,7 @@ export const products = [
     },
     {
         id: 5,
-        name: "Birkins handbag a very long list of somethinggdfdf",
+        name: "Black color short length Bow tie",
         avatar: 'https://robohash.org/bag.png?size=50x50&set=set1',
 		boosted: false,
 		date: "31 Mar, 2099",
@@ -79,7 +79,7 @@ export const products = [
     },
     {
         id: 7,
-        name: "Birkins handbag a very long list of somethinggdfdf",
+        name: "Birkin red handbag",
         avatar: 'https://robohash.org/bag.png?size=50x50&set=set1',
 		boosted: false,
 		date: "31 Mar, 2099",
@@ -92,7 +92,7 @@ export const products = [
     },
     {
         id: 8,
-        name: "MTN HYNETFLEX",
+        name: "Aventus Creed Eau de Parfum",
         avatar: 'https://robohash.org/mtn.png?size=50x50&set=set1',
 		boosted: true,
 		date: "31 Mar, 2099",
@@ -105,7 +105,7 @@ export const products = [
     },
     {
         id: 9,
-        name: "Birkins handbag a very long list of somethinggdfdf",
+        name: "Birkins red handbag",
         avatar: 'https://robohash.org/bag.png?size=50x50&set=set1',
 		boosted: false,
 		date: "31 Mar, 2099",
