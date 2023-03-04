@@ -24,6 +24,14 @@ export const TableContainer = styled.div`
                 padding: 16px 8px;
                 text-align: left;
                 white-space: nowrap;
+                &:last-child {
+                    border-top-right-radius: 8px;
+                    border-bottom-right-radius: 8px;
+                }
+                &:first-child {
+                    border-top-left-radius: 8px;
+                    border-bottom-left-radius: 8px;
+                }
             }
         }
         td {
@@ -100,11 +108,18 @@ export const PaginationContainer = styled.div`
         padding: 5px 5px 3px;
         background: #fff;
         border-radius: 4px;
+        cursor: pointer;
     }
     .active-page-button {
         color: #fff;
         background: var(--title-active);
     }
+    .paginationDisabled {
+        img {
+            cursor: auto;
+            filter: invert(60%);
+        }
+	}
     @media only screen and (max-width: 768px) {
         overflow: hidden;
 		p{

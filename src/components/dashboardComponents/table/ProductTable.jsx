@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import BoostIcon from '../../../assets/icons/boost-icon-pink.svg';
-import AngleLeft from '../../../assets/icons/angle-left.svg'
 import AngleRight from '../../../assets/icons/angle-right.svg'
 import Tag from '../../global/Tag';
 import { TableContainer, CheckBox, NameContainer, PaginationContainer } from './ProductTableStyle';
@@ -35,7 +34,7 @@ const NextLabel=()=> {
 // Get previous label icon for pagination
 const PreviousLabel=()=> {
 	return(
-		<img src={AngleLeft} alt="arrow right" />
+		<img src={AngleRight} alt="arrow right" style={{transform: "rotate(180deg)"}}/>
 	)
 }
 
@@ -121,6 +120,7 @@ const ProductTable = ({ columns, data }) => {
 						previousLinkClassName='previousBtn-a'
 						nextLinkClassName='nextBtn-a'
 						activeLinkClassName='active-page-button'
+						disabledClassName='paginationDisabled'
 						renderOnZeroPageCount={null}
 					/>
 					{paginatedData.length < dataPerPage ? (
