@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import BoostIcon from '../../../assets/icons/boost-icon-pink.svg';
 import AngleRight from '../../../assets/icons/angle-right.svg'
+import CheckIcon from '../../../assets/icons/check-good.svg';
 import Tag from '../../global/Tag';
-import { TableContainer, CheckBox, NameContainer, PaginationContainer } from './ProductTableStyle';
+import { TableContainer, NameContainer, PaginationContainer, HeaderCheck } from './ProductTableStyle';
 import ReactPaginate from 'react-paginate';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import Checkbox from '../../global/Checkbox';
 
 // component to render list of tags
 const displayTags = (tags) => {
@@ -42,13 +44,28 @@ const ProductTable = ({ columns, data }) => {
 	const {page} = useParams()
 	const navigate = useNavigate()
 
-	const [currentPage, setCurrentPage] = useState(+page);
-	const [dataPerPage] = useState(6);
+	const [currentPage, setCurrentPage] = useState(+page); //Current Page state
+	const [dataPerPage] = useState(6); //number of items per page
 
 	const pageVisited = currentPage * dataPerPage;
 
-	const paginatedData = data.slice(pageVisited, pageVisited + dataPerPage);
-	const pageCount = Math.ceil(data.length / dataPerPage);
+	const paginatedData = data.slice(pageVisited, pageVisited + dataPerPage); //data to render per pagination
+	const pageCount = Math.ceil(data.length / dataPerPage); //total number of pages
+
+	const [selectedProducts, setSelectedProducts] = useState([])
+
+	
+	// handle selection of products from checkbox
+	const handleSelect=(product)=> {
+		const index = selectedProducts.indexOf(product.id);
+		const updatedArray = [...selectedProducts];
+		if (index !== -1) {
+			updatedArray.splice(index, 1);
+		  } else {
+			updatedArray.push(product.id);
+		}
+		setSelectedProducts(updatedArray)
+	}
 
 	// Change page
 	const handlePageClick = ({ selected }) => {
@@ -71,7 +88,12 @@ const ProductTable = ({ columns, data }) => {
 					<thead>
 						<tr>
 							<th style={{ width: '36px' }}>
-								<CheckBox></CheckBox>
+								<HeaderCheck check={selectedProducts.length > 0 ? true : false}
+									onClick={()=> setSelectedProducts([])}
+								>
+									{selectedProducts.length > 0 && <img src={CheckIcon} alt='selected' /> }
+								</HeaderCheck>
+								{/* <Checkbox id="headerCheck" /> */}
 							</th>
 							{columns.map((col) => (
 								<th key={col.header}> {col.header} </th>
@@ -83,7 +105,11 @@ const ProductTable = ({ columns, data }) => {
 						{paginatedData.map((data, idx) => (
 							<tr key={data.id}>
 								<td>
-									<CheckBox></CheckBox>
+									<Checkbox 
+										id={data.id} 
+										onChange={()=>handleSelect(data)}
+										defaultCheck={selectedProducts.includes(data.id)}
+									/>
 								</td>
 								<td>
 									<Link to={`/products/edit/${data.id}`}>
