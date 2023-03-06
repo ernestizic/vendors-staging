@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import CloseIcon from '../../../assets/icons/close-square-white.svg'
 import styled from 'styled-components';
@@ -71,8 +71,17 @@ const TagInputContainer = styled.div`
 		line-height: 24px;
 	}
 `;
-const TagInputField = ({ name, label, setFieldValue }) => {
+const TagInputField = ({ name, label, setFieldValue, defaultValues }) => {
 	const [tags, setTags] = useState([]);
+
+	// Set tags state if there are already tags on the field
+	useEffect(()=> {
+		if(defaultValues){
+			setTags(defaultValues)
+		} else {
+			setTags([])
+		}
+	}, [defaultValues])
 
 	// Add a tag
 	function handleKeyDown(e) {
@@ -126,7 +135,7 @@ const TagInputField = ({ name, label, setFieldValue }) => {
 
 // PropTypes
 TagInputField.propTypes = {
-	value: PropTypes.string,
+	defaultValues: PropTypes.any,
 	name: PropTypes.string.isRequired,
 	label: PropTypes.string.isRequired,
 	setFieldValue: PropTypes.func.isRequired

@@ -34,10 +34,13 @@ export const TableContainer = styled.div`
                 }
             }
         }
+        a {
+            color: var(--title-active);
+        }
         td {
-            border-bottom: 1px solid var(--line-text);
             padding: 16px 8px;
             white-space: nowrap;
+            border-bottom: 1px solid var(--line-text);
         }
     }
 `

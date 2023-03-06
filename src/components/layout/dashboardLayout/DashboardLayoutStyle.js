@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const DashboardContainer = styled.div`
-    width: 100vw;
     
     .dashboard-screen{
         margin-left: 240px;

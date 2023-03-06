@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import BoostIcon from '../../../assets/icons/boost-icon-pink.svg';
 import AngleRight from '../../../assets/icons/angle-right.svg'
 import Tag from '../../global/Tag';
 import { TableContainer, CheckBox, NameContainer, PaginationContainer } from './ProductTableStyle';
 import ReactPaginate from 'react-paginate';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 // component to render list of tags
 const displayTags = (tags) => {
@@ -56,6 +56,14 @@ const ProductTable = ({ columns, data }) => {
 		navigate(`/products/${selected}`)
 	};
 
+	useEffect(()=> {
+		// Navigate to not found route if the page param on route is greater than total page number
+		if(currentPage + 1 > pageCount){
+			navigate("*")
+		}
+		// eslint-disable-next-line
+	}, [currentPage])
+
 	return (
 		<>
 			<TableContainer>
@@ -78,26 +86,28 @@ const ProductTable = ({ columns, data }) => {
 									<CheckBox></CheckBox>
 								</td>
 								<td>
-									<NameContainer>
-										<div>
-											<img
-												src={data.avatar}
-												alt='User'
-												className='product-image'
-											/>
-											<p className='product-name'>{data.name}</p>
-										</div>
-                                        {data.boosted && <img src={BoostIcon} alt='boosted' width='10px' />}
-									</NameContainer>
+									<Link to={`/products/edit/${data.id}`}>
+										<NameContainer>
+											<div>
+												<img
+													src={data.avatar}
+													alt='User'
+													className='product-image'
+												/>
+												<p className='product-name'>{data.name}</p>
+											</div>
+											{data.boosted && <img src={BoostIcon} alt='boosted' width='10px' />}
+										</NameContainer>
+									</Link>
 								</td>
-								<td>{data.date}</td>
-								<td>{data.price}</td>
-								<td>{data.category}</td>
-								<td>{data.tags && displayTags(data.tags)}</td>
-								<td>{data.clicks}</td>
-								<td>{data.saves}</td>
+								<td><Link to={`/products/edit/${data.id}`}>{data.date}</Link></td>
+								<td><Link to={`/products/edit/${data.id}`}>{data.price}</Link></td>
+								<td><Link to={`/products/edit/${data.id}`}>{data.category}</Link></td>
+								<td><Link to={`/products/edit/${data.id}`}>{data.tags && displayTags(data.tags)}</Link></td>
+								<td><Link to={`/products/edit/${data.id}`}>{data.clicks}</Link></td>
+								<td><Link to={`/products/edit/${data.id}`}>{data.saves}</Link></td>
 								<td>
-									<Tag content={data.status} status />
+								<Link to={`/products/edit/${data.id}`}><Tag content={data.status} status /></Link>
 								</td>
 							</tr>
 						))}

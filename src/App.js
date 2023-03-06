@@ -15,6 +15,8 @@ import Alert from './components/global/alert/Alert';
 import { useSelector } from 'react-redux';
 import LinkProduct from './pages/dashboard/products/addProductMethod/linkProduct/LinkProduct';
 import { ScrollToTop } from './components/global/ScrollToTop';
+import NotFound from './components/global/NotFound'
+import EditProduct from './pages/dashboard/editProduct/EditProduct';
 
 function App() {
   const {msg, alert} = useSelector(state => state.alert)
@@ -24,23 +26,26 @@ function App() {
       <Router>
         <ScrollToTop />
         <Routes>
-          <Route path="/" element={<Navigate to="/products" />} />
-          <Route path="/products" element={<Navigate to="/products/0" />} />
+          <Route exact path="/" element={<Navigate to="/products" />} />
+          <Route path="products/NaN" element={<Navigate to="/products" />} />
+          <Route path="products" element={<Navigate to="/products/0" />} />
           <Route path="/" element={<DashboardLayout />}>
-            <Route path="/products/:page" element={<ProductPage />} />
-            <Route path="/add-product" element={<AddProductMethod />} />
+            <Route path='overview' element={<OverviewPage />} />
+            <Route path="products/:page" element={<ProductPage />} />
+            <Route path="add-product" element={<AddProductMethod />} />
             <Route path="add-product/add-product-details" element={<SingleProduct />} />
             <Route path="add-product/add-product-url" element={<LinkProduct />} />
-            <Route path='/overview' element={<OverviewPage />} />
+            <Route path="products/edit/:product_id" element={<EditProduct />} />
           </Route>
 
-          <Route path='/sign-in' element= {<Login />}/>
-          <Route path='/sign-up' element= {<Signup />}/>
-          <Route path='/forgot-password' element= {<ForgotPassword />}/>
-          <Route path='/create-new-password' element= {<CreateNewPassword />}/>
-          <Route path='/reset-password' element= {<ResetPassword />}/>
-          <Route path="/verify-email" element={<VerifyEmail />}/>
-          <Route path="/create-store" element={<CreateStore />} />
+          <Route path='sign-in' element= {<Login />}/>
+          <Route path='sign-up' element= {<Signup />}/>
+          <Route path='forgot-password' element= {<ForgotPassword />}/>
+          <Route path='create-new-password' element= {<CreateNewPassword />}/>
+          <Route path='reset-password' element= {<ResetPassword />}/>
+          <Route path="verify-email" element={<VerifyEmail />}/>
+          <Route path="create-store" element={<CreateStore />} />
+          <Route path="*" element={<NotFound />}/>
         </Routes>
       </Router>
     </div>

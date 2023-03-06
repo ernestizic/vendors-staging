@@ -2,6 +2,7 @@ import React from 'react';
 import { OverviewTable, NameContainer } from './TableStyle';
 import BoostIcon from '../../../assets/icons/boost-icon-pink.svg';
 import Tag from '../../global/Tag';
+import { Link } from 'react-router-dom';
 
 const Table = ({tableData}) => {
 	// Table columns to render
@@ -41,6 +42,7 @@ const Table = ({tableData}) => {
 								{idx + 1}
 							</td>
 							<td>
+							<Link to={`/products/edit/${data.id}`}>
 								<NameContainer>
 									<div>
 										<img
@@ -54,6 +56,7 @@ const Table = ({tableData}) => {
 										<img src={BoostIcon} alt='boosted' width='10px' />
 									)}
 								</NameContainer>
+							</Link>
 							</td>
 							<td>{data.price}</td>
 							<td>

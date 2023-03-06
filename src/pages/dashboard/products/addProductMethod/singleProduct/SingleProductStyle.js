@@ -14,7 +14,6 @@ export const SingleProductContainer = styled.div`
 `
 export const AddProductContainer = styled.div`
     max-width: 816px;
-    /* border: 1px solid red; */
     margin-top: 32px;
 `
 
@@ -78,6 +77,7 @@ export const ImageContainer = styled.div`
     }
     .product-image {
         object-fit: cover;
+        border-radius: 8px;
     }
     .no-image {
         max-width: 194px;
