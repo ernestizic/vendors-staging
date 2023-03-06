@@ -23,6 +23,9 @@ const ForgotPassword = () => {
 			const res = await axios.post(`${base_url_vendors}/password/reset`, userData);
 			const data = res.data;
 			console.log(data)
+			dispatch(setAlert({
+				message: data.message
+			}))
 			setSubmitting(false)
 		} catch (err) {
 			let error = err.response ? err.response.data.data.email[0] : err.message;

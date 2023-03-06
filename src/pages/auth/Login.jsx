@@ -39,7 +39,7 @@ const Login = () => {
 	// const navigate = useNavigate()
 	const dispatch = useDispatch();
 	const { userInfo, accessToken } = useSelector((state) => state.auth);
-	console.log(userInfo, accessToken);
+	// console.log(userInfo, accessToken);
 
 	// Login user function
 	const login = async (userData, setSubmitting) => {
@@ -50,6 +50,9 @@ const Login = () => {
 				},
 			});
 			const data = res.data;
+			if(data.status === false) {
+				dispatch(setAlert({ message: data.message }));
+			}
 			console.log(data);
 			setSubmitting(false);
 		} catch (err) {
