@@ -33,8 +33,8 @@ export const CheckBoxContainer = styled.div`
 	}
 `;
 
-const Checkbox = ({ label, disabled, defaultCheck, id, onChange, required }) => {
-	const [isChecked, setIsChecked] = useState(defaultCheck);
+const Checkbox = ({ label, disabled, check, id, onChange, required, value }) => {
+	const [isChecked, setIsChecked] = useState(check);
 	return (
 		<Wrapper>
 			<CheckBoxContainer checked={isChecked}>
@@ -42,6 +42,7 @@ const Checkbox = ({ label, disabled, defaultCheck, id, onChange, required }) => 
 					id={`checkbox-${id}`}
 					type='checkbox'
 					checked={isChecked}
+					value={value}
 					onChange={(e) => {
 						setIsChecked((prev) => !prev);
                         onChange && onChange(e)
@@ -58,9 +59,10 @@ const Checkbox = ({ label, disabled, defaultCheck, id, onChange, required }) => 
 
 Checkbox.propTypes = {
     id: PropTypes.any,
+	value: PropTypes.any,
     label: PropTypes.string,
     disabled: PropTypes.bool,
-    defaultCheck: PropTypes.bool,
+    check: PropTypes.bool,
     onChange: PropTypes.func,
     required: PropTypes.bool,
   };

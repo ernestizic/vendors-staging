@@ -1,21 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { base_url_vendors } from '../../utils/utils';
-import axios from 'axios';
-
-// Sign up USER
-export const signup = (userData) => async (dispatch, getState) => {
-	console.log(userData);
-	dispatch(registerPending());
-	try {
-		const res = await axios.post(`${base_url_vendors}/register`, userData);
-		const data = res.data;
-		dispatch(registerSuccess(data));
-	} catch (err) {
-		let error = err.response ? err.response.data : err.message;
-		dispatch(registerFailure());
-		console.log(error);
-	}
-};
+// import { base_url_vendors } from '../../utils/utils';
+// import axios from 'axios';
 
 const initialState = {
 	accessToken: null,
@@ -30,34 +15,21 @@ const authSlice = createSlice({
 		setUser: (state, action) => {
 			return {
 				...state,
+				userInfo: action.payload
 			};
 		},
 		// set token
 		setToken: (state, action) => {
 			return {
 				...state,
+				accessToken: action.payload
 			};
 		},
 
-		// REGISTER REDUCER
-		registerPending: (state, action) => {
+		// LOGOUT REDUCER
+		logout: (state, action) => {
 			return {
 				...state,
-				isLoading: true,
-			};
-		},
-		registerSuccess: (state, action) => {
-			return {
-				...state,
-				isLoading: false,
-				// userInfo: action.payload,
-				// accessToken: action.payload.token,
-			};
-		},
-		registerFailure: (state, action) => {
-			return {
-				...state,
-				isLoading: false,
 				userInfo: null,
 				accessToken: null,
 			};
@@ -69,9 +41,7 @@ const authSlice = createSlice({
 export const {
 	setToken,
 	setUser,
-	registerPending,
-	registerSuccess,
-	registerFailure,
+	logout,
 } = authSlice.actions;
 
 export default authSlice.reducer;

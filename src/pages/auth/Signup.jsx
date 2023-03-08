@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AuthLayout from '../../components/layout/authLayout/AuthLayout';
 import InputField from '../../components/global/inputField/InputField';
 import * as Yup from 'yup';
@@ -10,6 +10,7 @@ import axios from 'axios';
 import { base_url_vendors } from '../../utils/utils';
 import { useDispatch } from 'react-redux';
 import { setAlert } from '../../redux/slices/alertSlice';
+import { setToken, setUser } from '../../redux/slices/authSlice';
 
 const SignupContainer = styled.div`
 	.flex_field {
@@ -56,6 +57,7 @@ let validationSchema = Yup.object().shape({
 // Signup component
 const Signup = () => {
 	const dispatch = useDispatch();
+	const navigate = useNavigate()
 
 	// signup user function
 	const signup =async(userData, setSubmitting)=> {
@@ -63,8 +65,12 @@ const Signup = () => {
 		try {
 			const res = await axios.post(`${base_url_vendors}/register`, userData);
 			const data = res.data;
-			console.log(data)
 			setSubmitting(false)
+			console.log(data)
+			dispatch(setAlert({ message: data.message }));
+			dispatch(setToken(data.data.token))
+			dispatch(setUser(data.data.user))
+			navigate("/verify-email")
 		} catch (err) {
 			let error = err.response ? err.response.data.message : err.message;
 			dispatch(setAlert({ message: error }));

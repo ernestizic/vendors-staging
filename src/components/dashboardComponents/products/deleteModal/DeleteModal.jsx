@@ -28,6 +28,7 @@ const DeleteModal = ({showModal, deleteAction}) => {
                         onClick={()=> showModal(false)}
                     />
                     <Button 
+                        className="delete"
                         text="Confirm" 
                         onClick={()=> deleteAction()}
                     />

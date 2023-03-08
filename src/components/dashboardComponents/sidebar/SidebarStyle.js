@@ -18,6 +18,7 @@ export const SidebarContainer = styled.div`
 		color: black;
 		transition: 0.2s ease;
 		overflow: auto;	
+		z-index: 2;
 		&::-webkit-scrollbar {
 			display: none;
 		}	

@@ -8,8 +8,9 @@ import { Formik } from 'formik';
 import Button from '../../components/global/button/Button';
 import axios from 'axios';
 import { base_url_vendors } from '../../utils/utils';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setAlert } from '../../redux/slices/alertSlice';
+import { setToken, setUser } from '../../redux/slices/authSlice';
 
 const LoginContainer = styled('div')`
 	.form-extra {
@@ -36,10 +37,7 @@ let validationSchema = Yup.object().shape({
 
 // Login Component
 const Login = () => {
-	// const navigate = useNavigate()
 	const dispatch = useDispatch();
-	const { userInfo, accessToken } = useSelector((state) => state.auth);
-	// console.log(userInfo, accessToken);
 
 	// Login user function
 	const login = async (userData, setSubmitting) => {
@@ -50,11 +48,15 @@ const Login = () => {
 				},
 			});
 			const data = res.data;
+			setSubmitting(false);
 			if(data.status === false) {
 				dispatch(setAlert({ message: data.message }));
 			}
-			console.log(data);
-			setSubmitting(false);
+			if(data.status === true) {
+				dispatch(setAlert({ message: data.message }));
+				dispatch(setToken(data.data.token))
+				dispatch(setUser(data.data.user))
+			}
 		} catch (err) {
 			let error = err.response ? err.response.data.data.email[0] : err.message;
 			dispatch(setAlert({ message: error }));
@@ -79,10 +81,6 @@ const Login = () => {
 				>
 					{({
 						values,
-						errors,
-						touched,
-						handleChange,
-						handleBlur,
 						handleSubmit,
 						isSubmitting,
 						isValid,

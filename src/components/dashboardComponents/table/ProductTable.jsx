@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import BoostIcon from '../../../assets/icons/boost-icon-pink.svg';
 import AngleRight from '../../../assets/icons/angle-right.svg'
@@ -53,18 +53,15 @@ const ProductTable = ({ columns, data }) => {
 	const pageCount = Math.ceil(data.length / dataPerPage); //total number of pages
 
 	const [selectedProducts, setSelectedProducts] = useState([])
-
 	
 	// handle selection of products from checkbox
-	const handleSelect=(product)=> {
-		const index = selectedProducts.indexOf(product.id);
-		const updatedArray = [...selectedProducts];
-		if (index !== -1) {
-			updatedArray.splice(index, 1);
-		  } else {
-			updatedArray.push(product.id);
+	const handleSelect=(e)=> {
+		const {value, checked} = e.target
+		if(checked) {
+			setSelectedProducts((prev)=> [...prev, value])
+		} else {
+			setSelectedProducts((prev)=> [...prev.filter( item => item !== value)])
 		}
-		setSelectedProducts(updatedArray)
 	}
 
 	// Change page
@@ -73,7 +70,7 @@ const ProductTable = ({ columns, data }) => {
 		navigate(`/products/${selected}`)
 	};
 
-	useEffect(()=> {
+	React.useEffect(()=> {
 		// Navigate to not found route if the page param on route is greater than total page number
 		if(currentPage + 1 > pageCount){
 			navigate("*")
@@ -88,12 +85,9 @@ const ProductTable = ({ columns, data }) => {
 					<thead>
 						<tr>
 							<th style={{ width: '36px' }}>
-								<HeaderCheck check={selectedProducts.length > 0 ? true : false}
-									onClick={()=> setSelectedProducts([])}
-								>
+								<HeaderCheck check={selectedProducts.length > 0 ? true : false}>
 									{selectedProducts.length > 0 && <img src={CheckIcon} alt='selected' /> }
 								</HeaderCheck>
-								{/* <Checkbox id="headerCheck" /> */}
 							</th>
 							{columns.map((col) => (
 								<th key={col.header}> {col.header} </th>
@@ -107,8 +101,9 @@ const ProductTable = ({ columns, data }) => {
 								<td>
 									<Checkbox 
 										id={data.id} 
-										onChange={()=>handleSelect(data)}
-										defaultCheck={selectedProducts.includes(data.id)}
+										onChange={handleSelect}
+										check={false}
+										value={data.id}
 									/>
 								</td>
 								<td>

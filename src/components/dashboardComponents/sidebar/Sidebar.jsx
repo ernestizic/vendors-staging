@@ -9,6 +9,8 @@ import UserIcon from '../../../assets/icons/user-profile-icon.svg'
 import CloseIcon from '../../../assets/icons/close_square.svg'
 import { ListItem, SelectStoreContainer, SidebarContainer, SidebarMenu } from './SidebarStyle';
 import { NavLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../../redux/slices/authSlice';
 
 
 const menuList = [
@@ -34,16 +36,17 @@ const menuList = [
     },
     {
       title: "User profile",
-      slug: "user-profile",
+      slug: "profile",
       icon: UserIcon,
     },
     {
       title: "Support",
-      slug: "wish-lists/profile",
+      slug: "support",
       icon: UserIcon,
     },
   ];
 const Sidebar = ({showSidebar, setShowSidebar}) => {
+  const dispatch = useDispatch()
     
 	return (
 		<SidebarContainer>
@@ -53,10 +56,10 @@ const Sidebar = ({showSidebar, setShowSidebar}) => {
         </button>
         <SelectStoreContainer>
           <div className='store-logo-text'>
-                      <p className='body-md-semibold'>B</p>
-                  </div>
-                  <p className='body-xs-semibold'>Blingz collection</p>
-                  <img src={ArrowDown} alt="arrow down"/>
+              <p className='body-md-semibold'>B</p>
+          </div>
+          <p className='body-xs-semibold'>Blingz collection</p>
+          <img src={ArrowDown} alt="arrow down"/>
         </SelectStoreContainer>
 
               <SidebarMenu>
@@ -69,6 +72,7 @@ const Sidebar = ({showSidebar, setShowSidebar}) => {
                       </ListItem>
                   ))}
               </SidebarMenu>
+              <button onClick={()=> dispatch(logout())}>Log out</button>
       </div>
 		</SidebarContainer>
 	);

@@ -62,4 +62,14 @@ export const StyledButton = styled.button`
 		background: inherit;
         box-shadow: none;
 	}
+	&.delete {
+		color: var(--primary-main);
+		color: #fff;
+		background: var(--error-default);
+        box-shadow: none;
+		&:hover {
+			background: var(--primary-dark);
+			cursor: pointer;
+		}
+	}
 `;
