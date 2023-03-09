@@ -97,10 +97,6 @@ const Signup = () => {
 				>
 					{({
 						values,
-						errors,
-						touched,
-						handleChange,
-						handleBlur,
 						handleSubmit,
 						isSubmitting,
 						isValid,

@@ -1,15 +1,25 @@
-import React, {useState, useEffect} from 'react'
-import { Outlet, useLocation } from 'react-router-dom'
-import Sidebar from '../../dashboardComponents/sidebar/Sidebar'
-import { DashboardContainer } from './DashboardLayoutStyle'
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { getVendorStores } from '../../../redux/slices/storeSlice';
+import Sidebar from '../../dashboardComponents/sidebar/Sidebar';
+import { ContentCenter } from '../../global/CenterBox';
+import Loader from '../../global/Loader';
+import { DashboardContainer } from './DashboardLayoutStyle';
+
 const DashboardLayout = () => {
-  const location = useLocation()
-  const [showSidebar, setShowSidebar] = useState(false);
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const location = useLocation();
+
+	const { stores, isLoading: storeLoading, userEmailVerified } = useSelector((state) => state.store);
+	const [showSidebar, setShowSidebar] = useState(false);
 	const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+	const [isLoading, setIsLoading] = useState(true);
 
 	const breakpoint = 768;
 
-  useEffect(() => {
+	useEffect(() => {
 		// Set screen width as window resizes
 		const handleWindowResize = () => setScreenWidth(window.innerWidth);
 		window.addEventListener('resize', handleWindowResize);
@@ -23,38 +33,62 @@ const DashboardLayout = () => {
 		return () => window.removeEventListener('resize', handleWindowResize);
 	}, [screenWidth]);
 
-  useEffect(() => {
+	useEffect(() => {
 		// toggle sidebar
 		(() => {
 			const nav = document.querySelector('.sidebar');
 			if (showSidebar) {
-        if(screenWidth < breakpoint) {
-          nav.style.width = '100%';
-        } else {
-          nav.style.width = "240px"
-        }
+				if (screenWidth < breakpoint) {
+					nav.style.width = '100%';
+				} else {
+					nav.style.width = '240px';
+				}
 			} else {
 				nav.style.width = '0px';
 			}
 		})();
 	}, [screenWidth, showSidebar]);
 
-  	// Close sidebar when route changes
-	useEffect(()=> {
-		if(screenWidth < breakpoint) {
+	// Close sidebar when route changes
+	useEffect(() => {
+		if (screenWidth < breakpoint) {
 			setShowSidebar(false);
 		}
-	}, [location, screenWidth])
+	}, [location, screenWidth]);
 
-  return (
-    <DashboardContainer>
-        <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar}/>
-        
-        <div className='dashboard-screen'>
-            <Outlet context={[showSidebar, setShowSidebar]}/>
-        </div>
-    </DashboardContainer>
-  )
-}
+	useEffect(() => {
+		dispatch(getVendorStores())
+	}, [dispatch]);
 
-export default DashboardLayout
+	// ensure user sees the dashboard only if they are verified and have at least one store created
+	useEffect(() => {
+		setIsLoading(true);
+		if (!userEmailVerified) {
+			navigate('/verify-email');
+			return;
+		}
+		if (stores.length < 1) {
+			navigate('/create-store');
+			setIsLoading(false);
+		}
+		// eslint-disable-next-line
+	}, [stores]);
+
+	return (
+		<>
+			{isLoading || storeLoading ? (
+				<div className='sidebar' style={{textAlign: "center"}}><ContentCenter><Loader /></ContentCenter></div>
+			) : (
+				<DashboardContainer>
+					<Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
+
+					<div className='dashboard-screen'>
+						<Outlet context={[showSidebar, setShowSidebar]} />
+					</div>
+				</DashboardContainer>
+			)}
+		</>
+	);
+};
+
+export default DashboardLayout;

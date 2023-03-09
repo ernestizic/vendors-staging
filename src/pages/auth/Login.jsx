@@ -60,7 +60,6 @@ const Login = () => {
 		} catch (err) {
 			let error = err.response ? err.response.data.data.email[0] : err.message;
 			dispatch(setAlert({ message: error }));
-			console.log(err.response.data)
 			setSubmitting(false);
 		}
 	};

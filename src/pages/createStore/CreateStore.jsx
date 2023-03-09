@@ -17,7 +17,6 @@ import { logout } from '../../redux/slices/authSlice';
 const CreateStore = () => {
 	const { userInfo } = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
-	console.log(userInfo)
 
 	// Function to create store
 	const createStore =async(userData, setSubmitting)=> {

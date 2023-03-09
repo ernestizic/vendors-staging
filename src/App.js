@@ -12,7 +12,7 @@ import DashboardLayout from './components/layout/dashboardLayout/DashboardLayout
 import AddProductMethod from './pages/dashboard/products/addProductMethod/AddProductMethod';
 import SingleProduct from './pages/dashboard/products/addProductMethod/singleProduct/SingleProduct';
 import Alert from './components/global/alert/Alert';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import LinkProduct from './pages/dashboard/products/addProductMethod/linkProduct/LinkProduct';
 import { ScrollToTop } from './components/global/ScrollToTop';
 import NotFound from './components/global/NotFound'
@@ -20,6 +20,7 @@ import EditProduct from './pages/dashboard/editProduct/EditProduct';
 import UserProfile from './pages/dashboard/userProfile/UserProfile';
 import axios from 'axios';
 import { setToken, setUser } from './redux/slices/authSlice';
+import ProtectedRoute from './pages/auth/ProtectedRoute';
 
 function App() {
   const {msg, alert} = useSelector(state => state.alert)
@@ -50,7 +51,7 @@ function App() {
           <Route exact path="/" element={<Navigate to="/products" />} />
           <Route path="products/NaN" element={<Navigate to="/products" />} />
           <Route path="products" element={<Navigate to="/products/0" />} />
-          <Route path="/" element={accessToken ? <DashboardLayout /> : <Navigate to='/sign-in' />}>
+          <Route path="/" element={ <ProtectedRoute><DashboardLayout /></ProtectedRoute> }>
             <Route path='overview' element={<OverviewPage />} />
             <Route path="products/:page" element={<ProductPage />} />
             <Route path="add-product" element={<AddProductMethod />} />
