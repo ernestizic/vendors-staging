@@ -51,7 +51,7 @@ function App() {
           <Route exact path="/" element={<Navigate to="/products" />} />
           <Route path="products/NaN" element={<Navigate to="/products" />} />
           <Route path="products" element={<Navigate to="/products/0" />} />
-          <Route path="/" element={ <ProtectedRoute><DashboardLayout /></ProtectedRoute> }>
+          <Route path="/" element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
             <Route path='overview' element={<OverviewPage />} />
             <Route path="products/:page" element={<ProductPage />} />
             <Route path="add-product" element={<AddProductMethod />} />
@@ -61,14 +61,15 @@ function App() {
             <Route path="profile" element={<UserProfile />} />
           </Route>
 
-          <Route path="verify-email" element={accessToken ? <VerifyEmail /> : <Navigate to="/sign-in" />}/>
+          <Route path="verify" element={<VerifyEmail />}/>
           <Route path="create-store" element={accessToken ? <CreateStore /> : <Navigate to="/sign-in" />} />
 
           <Route path='sign-in' element= {accessToken ? <Navigate to="/" /> : <Login />}/>
-          <Route path='sign-up' element= {accessToken ? <Navigate to="/" /> : <Signup />}/>
-          <Route path='forgot-password' element= {accessToken ? <Navigate to="/" /> : <ForgotPassword />}/>
-          <Route path='create-new-password' element= {accessToken ? <Navigate to="/" /> : <CreateNewPassword />}/>
-          <Route path='reset-password' element= {accessToken ? <Navigate to="/" /> : <ResetPassword />}/>
+          <Route path='sign-up' element= {accessToken ? <Navigate to="/verify" /> : <Signup />}/>
+          <Route path='forgot-password' element= {<ForgotPassword />}/>
+          <Route path='create-new-password' element= {<CreateNewPassword />}/>
+          
+          <Route path='reset-password' element= {<ResetPassword />}/>
           <Route path="*" element={<NotFound />}/>
         </Routes>
       </Router>

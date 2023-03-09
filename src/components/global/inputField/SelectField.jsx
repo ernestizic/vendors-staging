@@ -93,7 +93,8 @@ const SelectField = ({
 	fieldData,
 	setFieldValue,
 	defaultOption,
-	required
+	required,
+	valueToUse
 }) => {
 	const ref = useRef(null);
 
@@ -104,7 +105,11 @@ const SelectField = ({
 
 	const onOptionClicked = (value) => () => {
 		setSelectedOption(`${value.name} ${value.other ? value.other : ''}`);
-		setFieldValue(name, value.name);
+		if(valueToUse === "other") {
+			setFieldValue(name, value.other)
+		} else {
+			setFieldValue(name, value.name);
+		}
 		setIsOpen(false);
 	};
 
@@ -168,6 +173,7 @@ SelectField.propTypes = {
 			other: PropTypes.string,
 		})
 	),
+	valueToUse: PropTypes.string,
 	setFieldValue: PropTypes.func.isRequired,
 	label: PropTypes.string,
 	defaultOption: PropTypes.string,

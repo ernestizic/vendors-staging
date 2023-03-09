@@ -2,11 +2,13 @@ import React from 'react';
 import { VerifyEmailContainer, Content } from '../../components/layout/authLayout/AuthLayoutStyle';
 import Button from '../../components/global/button/Button';
 import Logo from '../../assets/icons/logo.svg';
+import { useNavigate } from 'react-router-dom';
 
 const ResetPassword = () => {
+	const navigate = useNavigate()
 	return (
 		<VerifyEmailContainer>
-			<Button className='secondary' text='Go back to site' width='235px' />
+			<Button className='secondary' text='Go back to site' width='235px' onClick={()=> navigate("/sign-in")} />
 
 			<Content>
 				<header className='textCenter title-semi-bold'>

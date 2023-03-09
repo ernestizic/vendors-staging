@@ -8,6 +8,7 @@ import axios from 'axios';
 import { base_url_vendors } from '../../utils/utils';
 import { useDispatch } from 'react-redux';
 import { setAlert } from '../../redux/slices/alertSlice';
+import { useNavigate } from 'react-router-dom';
 
 // Form validation
 let validationSchema = Yup.object().shape({
@@ -17,6 +18,7 @@ let validationSchema = Yup.object().shape({
 
 const ForgotPassword = () => {
 	const dispatch = useDispatch();
+	const navigate = useNavigate()
 
 	const passwordReset =async(userData, setSubmitting)=> {
 		try {
@@ -26,6 +28,7 @@ const ForgotPassword = () => {
 			dispatch(setAlert({
 				message: data.message
 			}))
+			navigate("/reset-password")
 			setSubmitting(false)
 		} catch (err) {
 			let error = err.response ? err.response.data.data.email[0] : err.message;

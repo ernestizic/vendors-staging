@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '../../components/global/button/Button';
 import Logo from '../../assets/icons/logo.svg';
 import { VerifyEmailContainer, Content } from '../../components/layout/authLayout/AuthLayoutStyle';
@@ -16,8 +16,8 @@ const VerifyEmail = () => {
 	const navigate = useNavigate()
 
 	const {search} = useLocation();
-	const nameFromQuery = new URLSearchParams(search).get('name');
-	console.log(nameFromQuery)
+	const isVerificationSuccess = new URLSearchParams(search).get('verified');
+	const verificationMessage = new URLSearchParams(search).get('message');
 
 	// Resend email verification
 	const resendEmail = async () => {
@@ -37,6 +37,21 @@ const VerifyEmail = () => {
 			setIsLoading(false);
 		}
 	};
+
+	useEffect(()=> {
+		const checkVerificationStatus =()=> {
+			if(!isVerificationSuccess || !verificationMessage) {
+				return
+			}
+			if(isVerificationSuccess === "true") {
+				dispatch(setAlert({message: verificationMessage}))
+				navigate("/create-store")
+			}
+		}
+		checkVerificationStatus()
+		// eslint-disable-next-line
+	}, [isVerificationSuccess, verificationMessage, dispatch])
+
 	return (
 		<VerifyEmailContainer>
 			<Button 
@@ -52,8 +67,8 @@ const VerifyEmail = () => {
 					<p>Verify email address</p>
 				</header>
 				<p className='body-sm-regular textCenter'>
-					Almost there {userInfo.firstname}! We have sent a verification email to Signing up as{' '}
-					<span className='bold'>{userInfo.email}</span>. You need tp verify
+					Almost there {userInfo?.firstname}! We have sent a verification email to Signing up as{' '}
+					<span className='bold'>{userInfo?.email}</span>. You need tp verify
 					your email address to continue on Giftly
 				</p>
                 <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>

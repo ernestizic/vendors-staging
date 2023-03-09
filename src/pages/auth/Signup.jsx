@@ -70,7 +70,7 @@ const Signup = () => {
 			dispatch(setAlert({ message: data.message }));
 			dispatch(setToken(data.data.token))
 			dispatch(setUser(data.data.user))
-			navigate("/verify-email")
+			navigate("/verify")
 		} catch (err) {
 			let error = err.response ? err.response.data.message : err.message;
 			dispatch(setAlert({ message: error }));

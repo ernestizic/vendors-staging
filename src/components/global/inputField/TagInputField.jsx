@@ -82,7 +82,7 @@ const TagInputField = ({ name, label, setFieldValue, defaultValues }) => {
 			setTags([])
 		}
 	}, [defaultValues])
-
+	
 	// Add a tag
 	function handleKeyDown(e) {
 		// // If user clicks spacebar
@@ -93,6 +93,7 @@ const TagInputField = ({ name, label, setFieldValue, defaultValues }) => {
 			if (!value.trim()) return;
 			// Add the value to the tags array and clear input
 			const lastAddedTag = [...tags, value]
+			console.log(lastAddedTag)
 			setTags(lastAddedTag);
 			setFieldValue(name, lastAddedTag.join(","))
 			e.target.value = '';
@@ -103,7 +104,7 @@ const TagInputField = ({ name, label, setFieldValue, defaultValues }) => {
 	function removeTag(index) {
 		const tagsLeft = tags.filter((el, idx) => idx !== index)
 		setTags(tagsLeft);
-		setFieldValue(name, tagsLeft.join(","))
+		setFieldValue(name, tagsLeft)
 	}
 
 	return (

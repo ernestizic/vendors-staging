@@ -14,7 +14,6 @@ export const getVendorStores = () => async (dispatch, getState) => {
 			},
 		});
 		const data = res.data;
-        console.log(data)
 		dispatch(fetchStoresSuccess(data));
 	} catch (err) {
 		let error = err.response ? err.response.data.message : err.message
@@ -23,8 +22,13 @@ export const getVendorStores = () => async (dispatch, getState) => {
 	}
 };
 
+export const getSingleStore =()=> async (dispatch, getState) => {
+	const {accessToken} = getState().auth
+}
+
 const initialState = {
     isLoading: false,
+	// currentStore: null,
 	stores: [],
     userEmailVerified: false,
 };

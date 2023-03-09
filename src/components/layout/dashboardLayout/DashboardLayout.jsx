@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { getVendorStores } from '../../../redux/slices/storeSlice';
 import Sidebar from '../../dashboardComponents/sidebar/Sidebar';
 import { ContentCenter } from '../../global/CenterBox';
@@ -8,14 +8,12 @@ import Loader from '../../global/Loader';
 import { DashboardContainer } from './DashboardLayoutStyle';
 
 const DashboardLayout = () => {
-	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const location = useLocation();
 
-	const { stores, isLoading: storeLoading, userEmailVerified } = useSelector((state) => state.store);
+	const { stores, isLoading: storeLoading } = useSelector((state) => state.store);
 	const [showSidebar, setShowSidebar] = useState(false);
 	const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-	const [isLoading, setIsLoading] = useState(true);
 
 	const breakpoint = 768;
 
@@ -59,24 +57,17 @@ const DashboardLayout = () => {
 	useEffect(() => {
 		dispatch(getVendorStores())
 	}, [dispatch]);
+	console.log(stores)
 
-	// ensure user sees the dashboard only if they are verified and have at least one store created
-	useEffect(() => {
-		setIsLoading(true);
-		if (!userEmailVerified) {
-			navigate('/verify-email');
-			return;
-		}
-		if (stores.length < 1) {
-			navigate('/create-store');
-			setIsLoading(false);
-		}
-		// eslint-disable-next-line
-	}, [stores]);
+	if (stores.length < 1 && !storeLoading) {
+		return (
+		  <Navigate to="/create-score" />
+		);
+	  }	
 
 	return (
 		<>
-			{isLoading || storeLoading ? (
+			{storeLoading ? (
 				<div className='sidebar' style={{textAlign: "center"}}><ContentCenter><Loader /></ContentCenter></div>
 			) : (
 				<DashboardContainer>

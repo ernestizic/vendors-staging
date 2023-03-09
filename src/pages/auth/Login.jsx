@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import AuthLayout from '../../components/layout/authLayout/AuthLayout';
 import InputField from '../../components/global/inputField/InputField';
@@ -38,6 +38,7 @@ let validationSchema = Yup.object().shape({
 // Login Component
 const Login = () => {
 	const dispatch = useDispatch();
+	const navigate = useNavigate()
 
 	// Login user function
 	const login = async (userData, setSubmitting) => {
@@ -56,6 +57,8 @@ const Login = () => {
 				dispatch(setAlert({ message: data.message }));
 				dispatch(setToken(data.data.token))
 				dispatch(setUser(data.data.user))
+				navigate("/products")
+
 			}
 		} catch (err) {
 			let error = err.response ? err.response.data.data.email[0] : err.message;
