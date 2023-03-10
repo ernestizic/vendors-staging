@@ -29,9 +29,13 @@ const CreateStore = () => {
 				},
 			});
 			const data = res.data;
-			setAlert({ message: data.message });
 			setSubmitting(false);
-			navigate("/products")
+			dispatch(setAlert({ message: `${data.message}. Login to access` }));
+			// delay logout for alert to be read
+			setTimeout(() => {
+				dispatch(logout())
+				navigate("/login")
+			}, 2000);
 		} catch (err) {
 			let error = err.response
 				? err.response.data.data.name[0] ||
