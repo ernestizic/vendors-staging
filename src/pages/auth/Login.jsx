@@ -38,7 +38,7 @@ let validationSchema = Yup.object().shape({
 // Login Component
 const Login = () => {
 	const dispatch = useDispatch();
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 
 	// Login user function
 	const login = async (userData, setSubmitting) => {
@@ -61,9 +61,21 @@ const Login = () => {
 
 			}
 		} catch (err) {
-			let error = err.response ? err.response.data.data.email[0] : err.message;
-			dispatch(setAlert({ message: error }));
 			setSubmitting(false);
+			let error
+			if(err.response) {
+				if(err.response.data.errors) {
+					error = err.response.data.errors.email[0]
+				} else if(err.response.data.data) {
+					error = err.response.data.data.email[0]
+				} else {
+					error = err.response.data.message
+				}
+			} else {
+				error = err.message
+			}
+			console.log(error);
+			dispatch(setAlert({ message: error }));
 		}
 	};
 
@@ -78,16 +90,9 @@ const Login = () => {
 					validationSchema={validationSchema}
 					onSubmit={(values, { setSubmitting }) => {
 						login(values, setSubmitting);
-
 					}}
 				>
-					{({
-						values,
-						handleSubmit,
-						isSubmitting,
-						isValid,
-						dirty,
-					}) => (
+					{({ values, handleSubmit, isSubmitting, isValid, dirty }) => (
 						<form onSubmit={handleSubmit}>
 							<InputField
 								name='email'

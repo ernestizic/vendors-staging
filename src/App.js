@@ -69,7 +69,7 @@ function App() {
           <Route path='forgot-password' element= {<ForgotPassword />}/>
           <Route path='create-new-password' element= {<CreateNewPassword />}/>
           
-          <Route path='reset-password' element= {<ResetPassword />}/>
+          <Route path='password/reset' element= {<ResetPassword />}/>
           <Route path="*" element={<NotFound />}/>
         </Routes>
       </Router>

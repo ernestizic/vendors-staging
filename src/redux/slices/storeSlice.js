@@ -14,7 +14,6 @@ export const getVendorStores = (initialLoad) => async (dispatch, getState) => {
 			},
 		});
 		const data = res.data;
-		console.log(data)
 		dispatch(fetchStoresSuccess(data));
 		initialLoad && dispatch(getSingleStore(data.data.stores.at(-1).id))
 	} catch (err) {
@@ -24,6 +23,7 @@ export const getVendorStores = (initialLoad) => async (dispatch, getState) => {
 	}
 };
 
+// Get Single Store
 export const getSingleStore = (storeId) => async (dispatch, getState) => {
 	const { accessToken } = getState().auth;
 	dispatch(fetchSingleStorePending());

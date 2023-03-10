@@ -68,7 +68,7 @@ const VerifyEmail = () => {
 				</header>
 				<p className='body-sm-regular textCenter'>
 					Almost there {userInfo?.firstname}! We have sent a verification email to Signing up as{' '}
-					<span className='bold'>{userInfo?.email}</span>. You need tp verify
+					<span className='bold'>{userInfo?.email}</span>. You need to verify
 					your email address to continue on Giftly
 				</p>
                 <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>

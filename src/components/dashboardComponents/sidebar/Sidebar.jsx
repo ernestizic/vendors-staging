@@ -56,7 +56,7 @@ const Sidebar = ({showSidebar, setShowSidebar}) => {
         </button>
         <SelectStoreContainer>
           <div className='store-logo-text'>
-              <p className='body-md-semibold'>B</p>
+              <p className='body-md-semibold'>{currentStore?.name?.charAt(0)}</p>
           </div>
           <p className='body-xs-semibold'>{currentStore?.name}</p>
           <img src={ArrowDown} alt="arrow down"/>

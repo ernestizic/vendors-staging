@@ -20,19 +20,20 @@ const ForgotPassword = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate()
 
+	// send email to reset password
 	const passwordReset =async(userData, setSubmitting)=> {
+		const userEmail = userData.email.replace(/\+/g, "%2B"); //.replace replaces + sign with %2B 
 		try {
 			const res = await axios.post(`${base_url_vendors}/password/reset`, userData);
 			const data = res.data;
-			console.log(data)
+			// pass email as params to route for resending of email
+			navigate(`/password/reset?email=${userEmail}`)
 			dispatch(setAlert({
 				message: data.message
 			}))
-			navigate("/reset-password")
 			setSubmitting(false)
 		} catch (err) {
 			let error = err.response ? err.response.data.data.email[0] : err.message;
-			console.log(error);
 			dispatch(setAlert({
 				message: error
 			}))
