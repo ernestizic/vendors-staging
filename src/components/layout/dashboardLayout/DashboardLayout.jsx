@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import { Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { getVendorStores } from '../../../redux/slices/storeSlice';
 import Sidebar from '../../dashboardComponents/sidebar/Sidebar';
 import { ContentCenter } from '../../global/CenterBox';
@@ -10,8 +10,10 @@ import { DashboardContainer } from './DashboardLayoutStyle';
 const DashboardLayout = () => {
 	const dispatch = useDispatch();
 	const location = useLocation();
+	const navigate = useNavigate();
 
-	const { stores, isLoading: storeLoading } = useSelector((state) => state.store);
+	const { error, isLoading: storeLoading } = useSelector((state) => state.store);
+	const { userInfo } = useSelector((state) => state.auth);
 	const [showSidebar, setShowSidebar] = useState(false);
 	const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
@@ -55,15 +57,19 @@ const DashboardLayout = () => {
 	}, [location, screenWidth]);
 
 	useEffect(() => {
-		dispatch(getVendorStores())
-	}, [dispatch]);
-	console.log(stores)
+		userInfo.email_verified_at ?? navigate("/verify")
+		dispatch(getVendorStores("initialLoad"))
+		// eslint-disable-next-line
+	}, [dispatch, userInfo]);
 
-	if (stores.length < 1 && !storeLoading) {
+	// Navigate to create store if there are no stores for a user
+	if (!storeLoading && error) {
 		return (
-		  <Navigate to="/create-score" />
+			<div className='sidebar'> 
+				<Navigate to="/create-store" />
+			</div>
 		);
-	  }	
+	}
 
 	return (
 		<>

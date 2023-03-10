@@ -18,12 +18,10 @@ const CreateStore = () => {
 	const navigate = useNavigate()
 	const { userInfo, accessToken } = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
-	console.log(userInfo)
 
 	// Function to create store
 	const createStore = async (userData, setSubmitting) => {
 		setSubmitting(true);
-		console.log(userData);
 		try {
 			const res = await axios.post(`${base_url_vendors}/store`, userData, {
 				headers: {

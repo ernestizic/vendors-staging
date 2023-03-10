@@ -61,7 +61,6 @@ const Signup = () => {
 
 	// signup user function
 	const signup =async(userData, setSubmitting)=> {
-		console.log(userData);
 		try {
 			const res = await axios.post(`${base_url_vendors}/register`, userData);
 			const data = res.data;

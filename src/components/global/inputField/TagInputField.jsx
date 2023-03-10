@@ -95,7 +95,7 @@ const TagInputField = ({ name, label, setFieldValue, defaultValues }) => {
 			const lastAddedTag = [...tags, value]
 			console.log(lastAddedTag)
 			setTags(lastAddedTag);
-			setFieldValue(name, lastAddedTag.join(","))
+			setFieldValue(name, lastAddedTag)
 			e.target.value = '';
 		}
 	}

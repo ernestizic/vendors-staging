@@ -9,7 +9,7 @@ import UserIcon from '../../../assets/icons/user-profile-icon.svg'
 import CloseIcon from '../../../assets/icons/close_square.svg'
 import { ListItem, SelectStoreContainer, SidebarContainer, SidebarMenu } from './SidebarStyle';
 import { NavLink } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../../redux/slices/authSlice';
 
 
@@ -47,7 +47,7 @@ const menuList = [
   ];
 const Sidebar = ({showSidebar, setShowSidebar}) => {
   const dispatch = useDispatch()
-    
+  const { currentStore } = useSelector((state) => state.store);
 	return (
 		<SidebarContainer>
       <div className='sidebar'>
@@ -58,7 +58,7 @@ const Sidebar = ({showSidebar, setShowSidebar}) => {
           <div className='store-logo-text'>
               <p className='body-md-semibold'>B</p>
           </div>
-          <p className='body-xs-semibold'>Blingz collection</p>
+          <p className='body-xs-semibold'>{currentStore?.name}</p>
           <img src={ArrowDown} alt="arrow down"/>
         </SelectStoreContainer>
 
@@ -71,8 +71,8 @@ const Sidebar = ({showSidebar, setShowSidebar}) => {
                           </NavLink>
                       </ListItem>
                   ))}
+                <button onClick={()=> dispatch(logout())}>Log out</button>
               </SidebarMenu>
-              <button onClick={()=> dispatch(logout())}>Log out</button>
       </div>
 		</SidebarContainer>
 	);
