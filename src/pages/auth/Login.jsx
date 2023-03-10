@@ -50,10 +50,6 @@ const Login = () => {
 			});
 			const data = res.data;
 			setSubmitting(false);
-                        if(!res) {
-			        dispatch(setAlert({ message: "An error occored. Switch to desktop and try again!"}));
-                                return; 
-			}
 			if(data.status === false) {
 				dispatch(setAlert({ message: data.message }));
 			}
@@ -78,7 +74,6 @@ const Login = () => {
 			} else {
 				error = err.message
 			}
-			console.log(error);
 			dispatch(setAlert({ message: error }));
 		}
 	};
