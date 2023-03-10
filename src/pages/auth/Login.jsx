@@ -50,8 +50,8 @@ const Login = () => {
 			});
 			const data = res.data;
 			setSubmitting(false);
-                        if(!data) {
-			        dispatch(setAlert({ message: "Switch to desktop to login"}));
+                        if(!res) {
+			        dispatch(setAlert({ message: "An error occored. Switch to desktop and try again!"}));
                                 return; 
 			}
 			if(data.status === false) {
