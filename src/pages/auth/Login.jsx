@@ -50,10 +50,16 @@ const Login = () => {
 			});
 			const data = res.data;
 			setSubmitting(false);
-			dispatch(setAlert({ message: data.message }));
-		        dispatch(setToken(data.data.token))
-			dispatch(setUser(data.data.user))
-			navigate("/products")
+			if(data.status === false) {
+				dispatch(setAlert({ message: data.message }));
+			}
+			if(data.status === true) {
+				dispatch(setAlert({ message: data.message }));
+				dispatch(setToken(data.data.token))
+				dispatch(setUser(data.data.user))
+				navigate("/products")
+
+			}
 		} catch (err) {
 			let error = err.response ? err.response.data.data.email[0] : err.message;
 			dispatch(setAlert({ message: error }));
