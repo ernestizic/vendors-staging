@@ -1,4 +1,4 @@
-import React from 'react';
+Bimport React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import AuthLayout from '../../components/layout/authLayout/AuthLayout';
@@ -50,6 +50,10 @@ const Login = () => {
 			});
 			const data = res.data;
 			setSubmitting(false);
+                        if(!data) {
+			        dispatch(setAlert({ message: "Switch to desktop to login"}));
+                                return; 
+			}
 			if(data.status === false) {
 				dispatch(setAlert({ message: data.message }));
 			}
