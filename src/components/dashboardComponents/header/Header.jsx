@@ -1,5 +1,4 @@
 import React from 'react';
-import { useOutletContext } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import Arrowleft from '../../../assets/icons/arrow-left.svg';
@@ -16,7 +15,6 @@ import {
 } from './HeaderStyle';
 
 const Header = ({ title, subTitle, goBack }) => {
-	const [showSidebar, setShowSidebar] = useOutletContext();
 	const navigate = useNavigate();
 	return (
 		<HeaderContainer>
@@ -52,7 +50,7 @@ const Header = ({ title, subTitle, goBack }) => {
 							src={MenuIcon}
 							alt='menu'
 							className='mobile-menu'
-							onClick={() => setShowSidebar(!showSidebar)}
+							onClick={() => document.querySelector(".sidebar").classList.add("open")}
 						/>
 					</>
 				)}

@@ -45,13 +45,14 @@ const menuList = [
       icon: UserIcon,
     },
   ];
-const Sidebar = ({showSidebar, setShowSidebar}) => {
+
+  const Sidebar = () => {
   const dispatch = useDispatch()
   const { currentStore } = useSelector((state) => state.store);
 	return (
 		<SidebarContainer>
       <div className='sidebar'>
-        <button className='close-btn' onClick={()=> setShowSidebar(!showSidebar)}>
+        <button className='close-btn' onClick={()=> document.querySelector(".sidebar").classList.remove("open")}>
           <img src={CloseIcon} alt="close" width="24px"/>
         </button>
         <SelectStoreContainer>
@@ -65,7 +66,12 @@ const Sidebar = ({showSidebar, setShowSidebar}) => {
               <SidebarMenu>
                   {menuList.map((item, idx)=> (
                       <ListItem key={idx}>
-                          <NavLink to= {`/${item.slug}`}>
+                          <NavLink 
+                            to= {`/${item.slug}`}
+                            onClick={() => {
+                              document.querySelector(".sidebar").classList.remove("open")
+                            }}
+                          >
                               <img src={item.icon} alt={item.title} />
                               {item.title}
                           </NavLink>
