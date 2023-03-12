@@ -1,15 +1,18 @@
 import { Formik, Form } from 'formik';
 import React from 'react'
+import { useSelector } from 'react-redux';
 import Button from '../../global/button/Button';
 import InputField from '../../global/inputField/InputField';
 
 const PersonalInformation = () => {
+    const {userInfo} = useSelector((state)=> state.auth)
   return (
     <Formik
+    enableReinitialize
     initialValues={{
-        firstname: "",
-        lastname: "",
-        email: '',
+        firstname: userInfo.firstname || "",
+        lastname: userInfo.lastname || "",
+        email: userInfo.email || '',
     }}
     // validationSchema={validationSchema}
     onSubmit={(values, { setSubmitting }) => {
