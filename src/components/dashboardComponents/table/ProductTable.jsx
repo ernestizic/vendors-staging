@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import BoostIcon from '../../../assets/icons/boost-icon-pink.svg';
 import AngleRight from '../../../assets/icons/angle-right.svg'
 import CheckIcon from '../../../assets/icons/check-good.svg';
 import Tag from '../../global/Tag';
-import { TableContainer, NameContainer, PaginationContainer, HeaderCheck } from './ProductTableStyle';
 import ReactPaginate from 'react-paginate';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Checkbox from '../../global/Checkbox';
+import { TableContainer, NameContainer, PaginationContainer, HeaderCheck } from './ProductTableStyle';
 
 // component to render list of tags
 const displayTags = (tags) => {
@@ -67,13 +67,16 @@ const ProductTable = ({ columns, data }) => {
 	// Change page
 	const handlePageClick = ({ selected }) => {
 		setCurrentPage(selected);
-		navigate(`/products/${selected}`)
+		// navigate(`/products/${selected}`)
 	};
 
-	React.useEffect(()=> {
+
+	useEffect(()=> {
 		// Navigate to not found route if the page param on route is greater than total page number
 		if(currentPage + 1 > pageCount){
 			navigate("*")
+		} else {
+			navigate(`/products/${currentPage}`)
 		}
 		// eslint-disable-next-line
 	}, [currentPage])

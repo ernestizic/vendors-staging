@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import GalleryIcon from '../../../../../assets/icons/gallery-export.svg';
 import CloseIcon from '../../../../../assets/icons/close-square-pink.svg';
@@ -13,8 +13,6 @@ import {
 	HiddenFields,
 } from './SingleProductStyle';
 
-const categories = ['Skincare', 'Accessories'];
-
 // convert file to base64
 const toBase64 = (file) =>
 	new Promise((resolve, reject) => {
@@ -27,6 +25,7 @@ const toBase64 = (file) =>
 	});
 
 const ProductField = ({
+	categories,
 	product,
 	onChange,
 	index,
@@ -34,7 +33,11 @@ const ProductField = ({
 	toggle,
 	open,
 }) => {
-	const [dragActive, setDragActive] = React.useState(false);
+	const [dragActive, setDragActive] = useState(false);
+
+	const productCategories = categories.map(item => {
+		return item.name
+	})
   
 	// handle drag events
 	const handleDrag =(e)=> {
@@ -160,9 +163,10 @@ const ProductField = ({
 							name={`products[${index}].product_category`}
 							setFieldValue={setFieldValue}
 							label='Select product category'
-							fieldData={categories.map((val) => {
+							fieldData={productCategories.map((val) => {
 								return { name: val };
 							})}
+							defaultOption=""
 							required
 						/>
 						<InputField

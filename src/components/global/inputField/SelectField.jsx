@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import DropdownArrow from '../../../assets/icons/arrow-square-down.svg';
+import Loader from '../Loader';
 import PropTypes from 'prop-types';
 
 import styled from 'styled-components';
@@ -28,11 +29,16 @@ const DropDownContainer = styled('div')`
 
 	.dropdown-arrow {
 		position: absolute;
+		transition: transform 0.1s ease;
 		top: 19px;
 		right: 19px;
 		&:hover {
 			cursor: pointer;
 		}
+	}
+	.rotate {
+		-webkit-transform: scaleX(-1);
+  		transform: scaleY(-1);
 	}
 	input {
 		margin-bottom: 16px;
@@ -56,6 +62,7 @@ const DropDownContainer = styled('div')`
 `;
 
 const DropDownListContainer = styled('div')`
+	transition: transform 0.6s ease;
 	position: absolute;
 	top: 85%;
 	max-height: 264px;
@@ -145,13 +152,14 @@ const SelectField = ({
 			<img
 				src={DropdownArrow}
 				alt='dropdown'
-				className='dropdown-arrow'
+				className={`dropdown-arrow ${isOpen && "rotate"}`}
 				onClick={toggling}
 			/>
 
 			{isOpen && (
 				<DropDownListContainer>
 					<DropDownList>
+						{fieldData.length < 1 && <div style={{textAlign: "center"}}><Loader /></div>}
 						{fieldData.map((option) => (
 							<ListItem onClick={onOptionClicked(option)} key={Math.random()}>
 								{option.name} {option.other && `${option.other}`}
@@ -176,7 +184,7 @@ SelectField.propTypes = {
 	valueToUse: PropTypes.string,
 	setFieldValue: PropTypes.func.isRequired,
 	label: PropTypes.string,
-	defaultOption: PropTypes.string,
+	defaultOption: PropTypes.string.isRequired,
 	required: PropTypes.bool
 };
 

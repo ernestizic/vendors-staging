@@ -22,7 +22,7 @@ const ResetPassword = () => {
 	useEffect(()=> {
 		const validateResetCode =async()=> {
 			if(!email && !resetCode) {
-				return
+				navigate("/forgot-password")
 			}
 
 			if(email && resetCode) {

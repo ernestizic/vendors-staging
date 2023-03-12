@@ -33,7 +33,7 @@ function App() {
     return response;
   }, function (error) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
+    // log user out
     if (error.response.status === 401) {
       dispatch(setToken(null))
       dispatch(setUser(null))
